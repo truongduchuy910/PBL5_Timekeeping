@@ -14,7 +14,10 @@
 
 ### 3.2 Rasberry Pi 3
 
-### 3.3 Node.js 
+### 3.3 Node.js
+
+As an asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications. In the following "hello world" example, many connections can be handled concurrently. Upon each connection, the callback is fired, but if there is no work to be done, Node.js will sleep.
+
 
 ## 4. Cấu trúc hệ thống.
 
