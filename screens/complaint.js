@@ -5,7 +5,7 @@ import { styles } from './styles/styles'
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>TIMEKEEPING SYSTEM</Text>
+      <Text>COMPLAINT SCREEN</Text>
     </View>
   );
 }
