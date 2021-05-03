@@ -36,7 +36,9 @@ export default function TimekeeperScreen({ navigation }) {
     };
 
     const monthChange = (month) => {
-        console.log(month.month);
+        let formattedMonth = month.month.toString();
+        if (formattedMonth < 10) formattedMonth = "0" + formattedMonth;
+        console.log(formattedMonth);
         console.log(month.year);
         setMarkedDates({
             '2021-05-01': {marked: true, dotColor: 'red'},
