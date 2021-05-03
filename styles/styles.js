@@ -124,4 +124,64 @@ export const styles = StyleSheet.create({
     calendar: {
         marginBottom: 20,
     }, 
+    salaryBox: {
+        borderRadius: 7,
+        marginBottom: 30,
+        padding: 14,
+        backgroundColor: '#fff',
+        shadowColor: "#666",
+        shadowOffset: {
+	        width: 7,
+	        height: 7,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 1,
+    }, 
+    salaryLine: {
+        flexDirection: 'row',
+        marginBottom: 18,
+    },
+    salaryText: {
+        color: '#777',
+    },
+    salaryNumber: {
+        marginLeft: 'auto',
+        fontWeight: 'bold',
+        color: '#24c48a',
+    },
+    salaryLastLine: {
+        flexDirection: 'row',
+        borderTopWidth: 1,
+        borderTopColor: '#eee',
+        paddingTop: 15,
+        marginBottom: 5,
+    },
+    salaryFirstLine: {
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+        marginBottom: 20,
+        marginTop: 10,
+    },
+    salaryFirstText: {
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#24c48a',
+    },
+    pickerText: {
+        fontSize: 14,
+    },
+    picker: {
+        width: '50%',
+    },
+    pickerContainer: {
+        marginTop: '-5%',
+        marginLeft: '10%',
+        marginRight: '10%',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
 })
