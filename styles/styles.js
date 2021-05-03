@@ -121,4 +121,7 @@ export const styles = StyleSheet.create({
         color: '#24c48a',
         fontWeight: 'bold',
     },
+    calendar: {
+        marginBottom: 20,
+    }, 
 })
