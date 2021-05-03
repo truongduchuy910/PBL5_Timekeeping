@@ -58,4 +58,67 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 14,
     },
+    boxContainer: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    box: {
+        marginBottom: 12,
+        borderRadius: 20,
+        paddingTop: 32,
+        paddingBottom: 22,
+        width: '48%',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        shadowColor: "#666",
+        shadowOffset: {
+	        width: 7,
+	        height: 7,
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+        elevation: 1,
+    },
+    boxText: {
+        color: '#888',
+        paddingTop: 15,
+        textAlign: 'center',
+        fontSize: 12,
+        lineHeight: 18,
+    },
+    icon: {
+        height: 45,
+        width: 45,
+    },
+    profile: {
+        margin: 26,
+        alignItems: 'center'
+    },
+    profileImage: {
+        height: 75,
+        width: 75,
+        borderRadius: 35,
+        marginBottom: 20,
+        borderWidth: 1,
+        borderColor: '#fff',
+    },
+    name: {
+        textAlign: 'center',
+        color: '#333',
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    notification: {
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: '#24c48a',
+        marginBottom: 30,
+        padding: 14,
+        backgroundColor: '#f5fffb',
+    },
+    notificationText: {
+        color: '#24c48a',
+        fontWeight: 'bold',
+    },
 })
