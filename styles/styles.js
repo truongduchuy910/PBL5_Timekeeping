@@ -184,4 +184,58 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    modalCalendar: {
+        width: '80%',
+        marginLeft: '10%',
+        marginTop: '20%',
+    },
+    modalToggle: {
+        marginBottom: 10,
+        borderWidth: 1,
+        borderColor: '#eee',
+        padding: 8,
+        borderRadius: 8,
+        alignSelf: 'center',
+    },
+    modalContainer: {
+        padding: 30,
+        backgroundColor: '#fff',
+    },
+    contactText: {
+        marginTop: 12,
+        marginBottom: 25,
+        color: '#888',
+        lineHeight: 18,
+        fontSize: 13,
+        borderBottomWidth: 1,
+    },
+    complaintForm: {
+        width: '80%',
+        marginLeft: '10%',
+    },
+    complaintDateInput: {
+        fontSize: 14,
+        color: '#666',
+    },
+    complaintView: {
+        borderWidth: 1,
+        borderColor: '#eee',
+        marginBottom: 12,
+        borderRadius: 8,
+        padding: 10,
+        flexDirection: 'row'
+    },
+    complaintMessageInput: {
+        fontSize: 14,
+        color: '#666',
+        borderWidth: 1,
+        borderColor: '#eee',
+        marginBottom: 12,
+        borderRadius: 8,
+        padding: 10,
+    },
+    calendarIcon: {
+        width: 20,
+        height: 20,
+    }, 
 })
