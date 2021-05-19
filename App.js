@@ -1,12 +1,20 @@
-import * as React from 'react';
-import { Image, Text, TextInput, View, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/home'
-import TimekeeperScreen from './screens/timekeeper'
-import SalaryScreen from './screens/salary'
-import ComplaintScreen from './screens/complaint'
-import { styles } from './styles/styles'
+import * as React from "react";
+import {
+  Image,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./screens/home";
+import TimekeeperScreen from "./screens/timekeeper";
+import SalaryScreen from "./screens/salary";
+import ComplaintScreen from "./screens/complaint";
+import { styles } from "./styles/styles";
 
 const AuthContext = React.createContext();
 
@@ -19,8 +27,8 @@ function SplashScreen() {
 }
 
 function SignInScreen() {
-  const [username, setUsername] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const { signIn } = React.useContext(AuthContext);
 
@@ -28,10 +36,10 @@ function SignInScreen() {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.HomeContainer}>
         <View style={styles.logoContainer}>
-          <Image 
-            source={require('./assets/logo.png')}
-            style={styles.logo}>
-          </Image>
+          <Image
+            source={require("./assets/logo.png")}
+            style={styles.logo}
+          ></Image>
         </View>
         <Text style={styles.welcome}>Welcome,</Text>
         <Text style={styles.subWelcome}>Sign in to continue!</Text>
@@ -49,9 +57,10 @@ function SignInScreen() {
             onChangeText={setPassword}
             secureTextEntry
           />
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.button}
-            onPress={() => signIn({ username, password })}>
+            onPress={() => signIn({ username, password })}
+          >
             <Text style={styles.buttonText}>SIGN IN</Text>
           </TouchableOpacity>
         </View>
@@ -66,19 +75,19 @@ export default function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
-        case 'RESTORE_TOKEN':
+        case "RESTORE_TOKEN":
           return {
             ...prevState,
             userToken: action.token,
             isLoading: false,
           };
-        case 'SIGN_IN':
+        case "SIGN_IN":
           return {
             ...prevState,
             isSignout: false,
             userToken: action.token,
           };
-        case 'SIGN_OUT':
+        case "SIGN_OUT":
           return {
             ...prevState,
             isSignout: true,
@@ -109,7 +118,7 @@ export default function App({ navigation }) {
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
-      dispatch({ type: 'RESTORE_TOKEN', token: userToken });
+      dispatch({ type: "RESTORE_TOKEN", token: userToken });
     };
 
     bootstrapAsync();
@@ -123,16 +132,16 @@ export default function App({ navigation }) {
         // After getting token, we need to persist the token using `SecureStore` or any other encrypted storage
         // In the example, we'll use a dummy token
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
-      signOut: () => dispatch({ type: 'SIGN_OUT' }),
+      signOut: () => dispatch({ type: "SIGN_OUT" }),
       signUp: async (data) => {
         // In a production app, we need to send user data to server and get a token
         // We will also need to handle errors if sign up failed
         // After getting token, we need to persist the token using `SecureStore` or any other encrypted storage
         // In the example, we'll use a dummy token
 
-        dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' });
+        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
       },
     }),
     []
@@ -141,43 +150,57 @@ export default function App({ navigation }) {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {
-          state.isLoading ? (
-            // We haven't finished checking for the token yet
-              <Stack.Screen name="Splash" component={SplashScreen} />
-          ) : state.userToken == null ? (
-            // No token found, user isn't signed in
-            <Stack.Navigator>
+        {state.isLoading ? (
+          // We haven't finished checking for the token yet
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        ) : state.userToken == null ? (
+          // No token found, user isn't signed in
+          <Stack.Navigator>
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
               options={{
-                title: 'Timekeeper Application',
+                title: "Timekeeper Application",
                 // When logging out, a pop animation feels intuitive
-                animationTypeForReplace: state.isSignout ? 'pop' : 'push',
-                headerShown: false
+                animationTypeForReplace: state.isSignout ? "pop" : "push",
+                headerShown: false,
               }}
             />
           </Stack.Navigator>
-          ) : (          
-            <Stack.Navigator
-              screenOptions={{
+        ) : (
+          <Stack.Navigator
+            screenOptions={{
               headerStyle: {
-                backgroundColor: '#24c48a',
+                backgroundColor: "#24c48a",
               },
-              headerTintColor: '#fff',
+              headerTintColor: "#fff",
               headerTitleStyle: {
-                fontWeight: 'bold',
-              }, 
-              }}
-            >
-              <Stack.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
-              <Stack.Screen name="ComplaintScreen" component={ComplaintScreen} options={{ title: 'New Complaint' }} />
-              <Stack.Screen name="SalaryScreen" component={SalaryScreen} options={{ title: 'Your Salary' }} />
-              <Stack.Screen name="TimekeeperScreen" component={TimekeeperScreen} options={{ title: 'Your Workdays' }} />
-            </Stack.Navigator> 
-          )
-        }
+                fontWeight: "bold",
+              },
+            }}
+          >
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="ComplaintScreen"
+              component={ComplaintScreen}
+              options={{ title: "New Complaint" }}
+            />
+            <Stack.Screen
+              name="SalaryScreen"
+              component={SalaryScreen}
+              options={{ title: "Your Salary" }}
+            />
+            <Stack.Screen
+              name="TimekeeperScreen"
+              component={TimekeeperScreen}
+              options={{ title: "Your Workdays" }}
+            />
+          </Stack.Navigator>
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
   );
