@@ -1,4 +1,11 @@
 import * as React from "react";
+import React from "react";
+import { AppRegistry } from "react-native";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+const client = new ApolloClient({
+  uri: "localhost:4000/graphql",
+  cache: new InMemoryCache(),
+});
 import {
   Image,
   Text,
@@ -71,7 +78,7 @@ function SignInScreen() {
 
 const Stack = createStackNavigator();
 
-export default function App({ navigation }) {
+function App({ navigation }) {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -148,60 +155,64 @@ export default function App({ navigation }) {
   );
 
   return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {state.isLoading ? (
-          // We haven't finished checking for the token yet
-          <Stack.Screen name="Splash" component={SplashScreen} />
-        ) : state.userToken == null ? (
-          // No token found, user isn't signed in
-          <Stack.Navigator>
-            <Stack.Screen
-              name="SignIn"
-              component={SignInScreen}
-              options={{
-                title: "Timekeeper Application",
-                // When logging out, a pop animation feels intuitive
-                animationTypeForReplace: state.isSignout ? "pop" : "push",
-                headerShown: false,
+    <ApolloProvider client={client}>
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+          {state.isLoading ? (
+            // We haven't finished checking for the token yet
+            <Stack.Screen name="Splash" component={SplashScreen} />
+          ) : state.userToken == null ? (
+            // No token found, user isn't signed in
+            <Stack.Navigator>
+              <Stack.Screen
+                name="SignIn"
+                component={SignInScreen}
+                options={{
+                  title: "Timekeeper Application",
+                  // When logging out, a pop animation feels intuitive
+                  animationTypeForReplace: state.isSignout ? "pop" : "push",
+                  headerShown: false,
+                }}
+              />
+            </Stack.Navigator>
+          ) : (
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: "#24c48a",
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
               }}
-            />
-          </Stack.Navigator>
-        ) : (
-          <Stack.Navigator
-            screenOptions={{
-              headerStyle: {
-                backgroundColor: "#24c48a",
-              },
-              headerTintColor: "#fff",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
-            }}
-          >
-            <Stack.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="ComplaintScreen"
-              component={ComplaintScreen}
-              options={{ title: "New Complaint" }}
-            />
-            <Stack.Screen
-              name="SalaryScreen"
-              component={SalaryScreen}
-              options={{ title: "Your Salary" }}
-            />
-            <Stack.Screen
-              name="TimekeeperScreen"
-              component={TimekeeperScreen}
-              options={{ title: "Your Workdays" }}
-            />
-          </Stack.Navigator>
-        )}
-      </NavigationContainer>
-    </AuthContext.Provider>
+            >
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="ComplaintScreen"
+                component={ComplaintScreen}
+                options={{ title: "New Complaint" }}
+              />
+              <Stack.Screen
+                name="SalaryScreen"
+                component={SalaryScreen}
+                options={{ title: "Your Salary" }}
+              />
+              <Stack.Screen
+                name="TimekeeperScreen"
+                component={TimekeeperScreen}
+                options={{ title: "Your Workdays" }}
+              />
+            </Stack.Navigator>
+          )}
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </ApolloProvider>
   );
 }
+AppRegistry.registerComponent("MyApplication", () => App);
+export default App;
