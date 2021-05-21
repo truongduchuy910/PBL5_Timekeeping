@@ -8,7 +8,7 @@ const initialiseData = require("./initial-data");
 const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
 var keystone = new Keystone({
   adapter: new MongooseAdapter({
-    mongoUri: "mongodb://localhost:27017/timekeeper",
+    mongoUri: "mongodb://timekeeping:timekeeping@db.itoa.vn:27017/timekeeping",
   }),
   onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
   //
