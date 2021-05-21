@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View } from "react-native";
-import { styles } from "../styles/styles";
+import { styles } from "../../styles/styles";
 import { Calendar } from "react-native-calendars";
 export default function TimekeeperScreen({ navigation }) {
   const getCurrentDay = () => {

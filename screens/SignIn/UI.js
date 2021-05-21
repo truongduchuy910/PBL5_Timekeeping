@@ -1,31 +1,26 @@
 import {
+  Button,
   Image,
-  Keyboard,
   Text,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import React, { useContext, useState } from "react";
-import { styles } from "../styles/styles";
-import { AuthContext, screens } from "../App";
-import { HOME } from "./Home";
-export const SIGNIN = "SignIn";
-export default function SignInScreen({ navigation }) {
+import { styles } from "../../styles/styles";
+import React, { useState } from "react";
+export default function UI({ onSignIn, result }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { signIn } = useContext(AuthContext);
+  const clickSignIn = async () => {
+    // same with above
+    const result = await onSignIn({ username, password });
+  };
   return (
-    <TouchableWithoutFeedback
-    //onPress={() => Keyboard.dismiss()}
-    >
+    <TouchableWithoutFeedback>
       <View style={styles.HomeContainer}>
         <View style={styles.logoContainer}>
-          <Image
-            source={require("../assets/logo.png")}
-            style={styles.logo}
-          ></Image>
+          <Image source={require("./logo.png")} style={styles.logo}></Image>
         </View>
         <Text style={styles.welcome}>Welcome,</Text>
         <Text style={styles.subWelcome}>Sign in to continue!</Text>
@@ -33,24 +28,24 @@ export default function SignInScreen({ navigation }) {
           <TextInput
             style={styles.textInput}
             placeholder="Username"
-            // value={username}
             onChangeText={setUsername}
           />
           <TextInput
             style={styles.textInput}
             placeholder="Password"
-            // value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
           <TouchableOpacity
+            disabled={result.loading}
             style={styles.button}
-            onPress={() => {
-              navigation.navigate(screens.HOME);
-            }}
+            onPress={clickSignIn}
           >
-            <Text style={styles.buttonText}>SIGN IN</Text>
+            <Text style={styles.buttonText}>
+              {result.loading ? "Loading..." : "Sign In"}
+            </Text>
           </TouchableOpacity>
+          <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
         </View>
       </View>
     </TouchableWithoutFeedback>

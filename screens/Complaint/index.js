@@ -9,9 +9,9 @@ import {
   Keyboard,
   Image,
 } from "react-native";
-import { styles } from "../styles/styles";
+import { styles } from "../../styles/styles";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-import ComplaintModal from "../modals/Complaint";
+import ComplaintModal from "./ComplaintModal";
 export default function ComplaintScreen({ navigation }) {
   const getCurrentDay = () => {
     var date = new Date().getDate();

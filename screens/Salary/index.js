@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, Picker } from "react-native";
-import { styles } from "../styles/styles";
+import { styles } from "../../styles/styles";
 export default function SalaryScreen({ navigation }) {
   const getCurrentMonth = () => {
     var month = (new Date().getMonth() + 1).toString();

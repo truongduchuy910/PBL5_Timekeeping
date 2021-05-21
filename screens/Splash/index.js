@@ -6,7 +6,7 @@ export default function Splash() {
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItindexems: "center",
       }}
     >
       <Text>Loading...</Text>
