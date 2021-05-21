@@ -30,7 +30,7 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.box}
-          onPress={() => navigation.navigate("SalaryScreen")}
+          onPress={(e) => navigation.navigate("SalaryScreen")}
         >
           <Image
             source={require("../assets/icons/salary.png")}
