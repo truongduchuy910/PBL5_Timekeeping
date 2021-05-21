@@ -1,12 +1,4 @@
-var momoBusiness = require("./Momo/Business");
-var momoRequest = require("./Momo/Request");
-var payment = require("./Payment");
-var messengerUser = require("./Messenger/User");
-var messengerMessaging = require("./Messenger/Messaging");
-var activity = require("./Activity");
 var user = require("./User");
-var notificationGroup = require("./Notification/Group");
-var notification = require("./Notification");
 /**
  *
  */
@@ -46,17 +38,6 @@ class Models extends Extension {
      * USER
      */
     this.keystone.createList("User", user);
-    this.keystone.createList("MessengerUser", messengerUser);
-    this.keystone.createList("MessengerMessaging", messengerMessaging);
-    this.keystone.createList("Activity", { ...activity, plugins: [at] });
-    this.keystone.createList("NotificationGroup", notificationGroup);
-    this.keystone.createList("Notification", notification);
-    this.keystone.createList("MomoBusiness", momoBusiness);
-    this.keystone.createList("MomoRequest", {
-      ...momoRequest,
-      plugins: [at, by],
-    });
-    this.keystone.createList("Payment", { ...payment, plugins: [at] });
   }
 }
 module.exports = { Models };
