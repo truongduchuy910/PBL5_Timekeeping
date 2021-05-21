@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
+import { screens } from "../App";
 import { styles } from "../styles/styles";
+
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -20,7 +22,7 @@ export default function HomeScreen({ navigation }) {
       <View style={styles.boxContainer}>
         <TouchableOpacity
           style={styles.box}
-          onPress={() => navigation.navigate("TimekeeperScreen")}
+          onPress={() => navigation.navigate(screens.TIMEKEEPER)}
         >
           <Image
             source={require("../assets/icons/timekeeper.png")}
@@ -30,7 +32,7 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.box}
-          onPress={(e) => navigation.navigate("SalaryScreen")}
+          onPress={(e) => navigation.navigate(screens.SALARY)}
         >
           <Image
             source={require("../assets/icons/salary.png")}
@@ -40,7 +42,7 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.box}
-          onPress={() => navigation.navigate("ComplaintScreen")}
+          onPress={() => navigation.navigate(screens.COMPLAINT)}
         >
           <Image
             source={require("../assets/icons/complaint.png")}
@@ -48,7 +50,12 @@ export default function HomeScreen({ navigation }) {
           ></Image>
           <Text style={styles.boxText}>New Complaint</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.box} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.box}
+          onPress={() => {
+            navigation.navigate(screens.SIGNIN);
+          }}
+        >
           <Image
             source={require("../assets/icons/logout.png")}
             style={styles.icon}

@@ -11,8 +11,7 @@ import {
 } from "react-native";
 import { styles } from "../styles/styles";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-import ComplaintModal from "./complaintModal";
-
+import ComplaintModal from "../modals/Complaint";
 export default function ComplaintScreen({ navigation }) {
   const getCurrentDay = () => {
     var date = new Date().getDate();
@@ -33,7 +32,6 @@ export default function ComplaintScreen({ navigation }) {
   const [isModalShow, setIsModalShow] = useState(false);
 
   const pickDate = (date) => {
-    console.log(date.dateString);
     setDate(date.dateString);
     setIsModalShow(false);
   };

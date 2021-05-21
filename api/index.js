@@ -5,14 +5,12 @@ const { AdminUIApp } = require("@keystonejs/app-admin-ui");
 const { Packages } = require("./packages");
 const { Models } = require("./models");
 const initialiseData = require("./initial-data");
-const { api, session } = require("../database/uris");
 const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
-const MongoStore = require("connect-mongo");
 var keystone = new Keystone({
-  adapter: new MongooseAdapter(api),
+  adapter: new MongooseAdapter({
+    mongoUri: "mongodb://localhost:27017/timekeeper",
+  }),
   onConnect: process.env.CREATE_TABLES !== "true" && initialiseData,
-  //
-  sessionStore: new MongoStore({ mongoUrl: session.mongoUri }),
   //
   secureCookies: process.env.NODE_ENV === "production",
   cookieSecret: "seller.itoa.vn",
