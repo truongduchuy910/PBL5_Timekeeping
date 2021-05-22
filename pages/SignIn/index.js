@@ -21,7 +21,7 @@ export const UserSignInMutation = gql`
 `;
 export default function SignInScreen({ navigation }) {
   const [onUserSignInMutation, result] = useMutation(UserSignInMutation);
-  const { loading, error, data } = useQuery(AuthenticatedUserQuery);
+  const { loading, error, data, refetch } = useQuery(AuthenticatedUserQuery);
   const onSignIn = ({ username, password }) => {
     if (!result.loading) {
       return onUserSignInMutation({
@@ -32,15 +32,16 @@ export default function SignInScreen({ navigation }) {
         } = result;
         author(authenticate);
         AsyncStorage.setItem("@author", JSON.stringify(authenticate)).finally(
-          () => navigation.navigate(screens.HOME)
+          refetch
         );
       });
     }
   };
   useEffect(() => {
-    if (loading || error) return;
+    if (loading) return;
+    if (error) AsyncStorage.removeItem("@author").finally(() => author({}));
     const { authenticatedUser } = data;
-    if (authenticatedUser.id) navigation.navigate(screens.HOME);
+    if (authenticatedUser?.name) navigation.navigate(screens.HOME);
   });
   if (loading || error) return <Splash />;
   return <UI onSignIn={onSignIn} result={result} />;

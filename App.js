@@ -28,7 +28,7 @@ export const screens = {
   TIMEKEEPER: "Timekepper",
 };
 export const author = makeVar({});
-const uri = "http://localhost:7009/admin/api";
+const uri = "https://timekeeping.itoa.vn/admin/api";
 const client = new ApolloClient({
   uri,
   cache: new InMemoryCache(),
@@ -107,5 +107,5 @@ function App() {
     </ApolloProvider>
   );
 }
-AppRegistry.registerComponent("MyApplication", () => App);
+AppRegistry.registerComponent("TimeKeeping", () => App);
 export default App;
