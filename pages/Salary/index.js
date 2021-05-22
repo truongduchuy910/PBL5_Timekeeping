@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, Picker } from "react-native";
+import Container from "../../components/Container";
 import { styles } from "../../styles/styles";
 export default function SalaryScreen({ navigation }) {
   const getCurrentMonth = () => {
@@ -18,7 +19,7 @@ export default function SalaryScreen({ navigation }) {
   const [selectedYear, setSelectedYear] = useState(getCurrentYear);
 
   return (
-    <View style={styles.container}>
+    <Container>
       <View style={styles.salaryBox}>
         <View style={styles.salaryFirstLine}>
           <Text style={styles.salaryFirstText}>
@@ -79,6 +80,6 @@ export default function SalaryScreen({ navigation }) {
           </Picker>
         </View>
       </View>
-    </View>
+    </Container>
   );
 }

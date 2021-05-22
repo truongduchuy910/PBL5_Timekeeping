@@ -57,6 +57,5 @@
   "bugs": {
     "url": "https://github.com/itoa-vn/api/issues"
   },
-  "main": "index.js",
-  "devDependencies": {}
+  "main": "index.js"
 }

@@ -1,14 +1,13 @@
 import {
-  Button,
   Image,
   Text,
   TextInput,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { styles } from "../../styles/styles";
 import React, { useState } from "react";
+import Button from "../../components/Button";
 export default function UI({ onSignIn, result }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -22,9 +21,31 @@ export default function UI({ onSignIn, result }) {
         <View style={styles.logoContainer}>
           <Image source={require("./logo.png")} style={styles.logo}></Image>
         </View>
-        <Text style={styles.welcome}>Welcome,</Text>
-        <Text style={styles.subWelcome}>Sign in to continue!</Text>
-        <View style={styles.form}>
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "bold",
+            color: "#333",
+            textAlign: "center",
+          }}
+        >
+          Welcome,
+        </Text>
+        <Text
+          style={{
+            color: "#aaa",
+            textAlign: "center",
+            fontSize: 22,
+            paddingTop: "2%",
+          }}
+        >
+          Sign in to continue!
+        </Text>
+        <View
+          style={{
+            paddingVertical: "10%",
+          }}
+        >
           <TextInput
             style={styles.textInput}
             placeholder="Username"
@@ -36,15 +57,11 @@ export default function UI({ onSignIn, result }) {
             onChangeText={setPassword}
             secureTextEntry
           />
-          <TouchableOpacity
-            disabled={result.loading}
-            style={styles.button}
+          <Button
+            loading={result.loading}
             onPress={clickSignIn}
-          >
-            <Text style={styles.buttonText}>
-              {result.loading ? "Loading..." : "Sign In"}
-            </Text>
-          </TouchableOpacity>
+            value={"Sign In"}
+          />
           <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
         </View>
       </View>

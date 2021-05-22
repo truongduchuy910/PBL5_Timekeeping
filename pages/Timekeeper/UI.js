@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { styles } from "../../styles/styles";
 import { Calendar } from "react-native-calendars";
+import Container from "../../components/Container";
 export default function TimekeeperScreen({
   allShifts,
   navigation,
@@ -46,7 +47,7 @@ export default function TimekeeperScreen({
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Calendar
         markedDates={markedDates}
         theme={{
@@ -75,6 +76,6 @@ export default function TimekeeperScreen({
           </View>
         );
       })}
-    </View>
+    </Container>
   );
 }

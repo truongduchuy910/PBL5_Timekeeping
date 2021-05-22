@@ -9,9 +9,10 @@ import {
   Keyboard,
   Image,
 } from "react-native";
-import { styles } from "../../styles/styles";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import ComplaintModal from "./ComplaintModal";
+import Container from "../../components/Container";
+import Button from "../../components/Button";
 export default function ComplaintScreen({ navigation }) {
   const getCurrentDay = () => {
     var date = new Date().getDate();
@@ -38,27 +39,64 @@ export default function ComplaintScreen({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
+      <Container>
         <Modal visible={isModalShow} animationType="slide">
           <ComplaintModal pickDate={pickDate} />
           <TouchableOpacity onPress={() => setIsModalShow(false)}>
             <Ionicons
               name="close"
               size={16}
-              style={styles.modalToggle}
+              style={{
+                marginBottom: 10,
+                borderWidth: 1,
+                borderColor: "#eee",
+                padding: 8,
+                borderRadius: 8,
+                alignSelf: "center",
+              }}
               color="#24c48a"
             />
           </TouchableOpacity>
         </Modal>
-        <View style={styles.complaintForm}>
+        <View
+          style={{
+            width: "80%",
+            marginLeft: "10%",
+          }}
+        >
           <View>
-            <Text style={styles.contactText}>
+            <Text
+              style={{
+                marginTop: 12,
+                marginBottom: 25,
+                color: "#888",
+                lineHeight: 18,
+                fontSize: 13,
+                borderBottomWidth: 1,
+              }}
+            >
               If you are having any problems with Timekeeper system, please fill
               in this form and we will solve your issue immediately.
             </Text>
           </View>
-          <View style={styles.complaintView}>
-            <Text style={styles.complaintDateInput}>{date}</Text>
+          <View
+            style={{
+              borderWidth: 1,
+              borderColor: "#eee",
+              marginBottom: 12,
+              borderRadius: 8,
+              padding: 10,
+              flexDirection: "row",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 14,
+                color: "#666",
+              }}
+            >
+              {date}
+            </Text>
             <TouchableOpacity
               style={{ marginLeft: "auto" }}
               onPress={() => {
@@ -73,14 +111,20 @@ export default function ComplaintScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <TextInput
-            style={styles.complaintMessageInput}
+            style={{
+              fontSize: 14,
+              color: "#666",
+              borderWidth: 1,
+              borderColor: "#eee",
+              marginBottom: 12,
+              borderRadius: 8,
+              padding: 10,
+            }}
             placeholder="Your Message"
           />
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
-            <Text style={styles.buttonText}>SEND NOW</Text>
-          </TouchableOpacity>
+          <Button value={"SEND NOW"} />
         </View>
-      </View>
+      </Container>
     </TouchableWithoutFeedback>
   );
 }

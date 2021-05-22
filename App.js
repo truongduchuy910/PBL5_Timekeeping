@@ -11,15 +11,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { createContext, useEffect, useReducer, useMemo } from "react";
 import { setContext } from "@apollo/client/link/context";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 /**
  * screen
  */
-import Home from "./screens/Home";
-import Timekeeper from "./screens/Timekeeper";
-import Salary from "./screens/Salary";
-import Complaint from "./screens/Complaint";
-import SignIn from "./screens/SignIn";
+import Home from "./pages/Home";
+import Timekeeper from "./pages/Timekeeper";
+import Salary from "./pages/Salary";
+import Complaint from "./pages/Complaint";
+import SignIn from "./pages/SignIn";
 export const screens = {
   HOME: "Home",
   COMPLAINT: "Complaint",
@@ -47,6 +47,17 @@ const client = new ApolloClient({
   ),
 });
 const Stack = createStackNavigator();
+
+AsyncStorage.getItem("@author").then((value) => {
+  try {
+    const authenticate = JSON.parse(value);
+    if (authenticate) author(authenticate);
+  } catch (e) {
+    console.log(e);
+    AsyncStorage.removeItem("@author");
+  }
+});
+
 function App() {
   return (
     <ApolloProvider client={client}>

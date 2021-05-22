@@ -1,13 +1,14 @@
-const { Text, Password, Checkbox } = require("@keystonejs/fields");
-const { gql } = require("@apollo/client");
-const { DateTime } = require("@keystonejs/fields");
+const { Relationship } = require("@keystonejs/fields");
 const { DateTimeUtc } = require("@keystonejs/fields");
-
+let { sellerItem } = require("../access");
 module.exports = {
   fields: {
     checkin: { type: DateTimeUtc },
     checkout: {
       type: DateTimeUtc,
     },
+    shift: { type: Relationship, ref: "Shift.works" },
+    images: { type: Relationship, ref: "Image.work", may: true },
   },
+  access: sellerItem,
 };

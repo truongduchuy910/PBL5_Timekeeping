@@ -1,11 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  container: {
-    padding: 30,
-    backgroundColor: "#fff",
-    flex: 1,
-  },
   HomeContainer: {
     padding: 30,
     backgroundColor: "#fff",
@@ -44,20 +39,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     fontSize: 14,
   },
-  button: {
-    backgroundColor: "#24c48a",
-    borderRadius: 8,
-    width: "50%",
-    marginLeft: "25%",
-    marginTop: 5,
-  },
-  buttonText: {
-    color: "#fff",
-    padding: 10,
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 14,
-  },
+
   boxContainer: {
     flexWrap: "wrap",
     flexDirection: "row",
@@ -189,51 +171,12 @@ export const styles = StyleSheet.create({
     marginLeft: "10%",
     marginTop: "20%",
   },
-  modalToggle: {
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: "#eee",
-    padding: 8,
-    borderRadius: 8,
-    alignSelf: "center",
-  },
+
   modalContainer: {
     padding: 30,
     backgroundColor: "#fff",
   },
-  contactText: {
-    marginTop: 12,
-    marginBottom: 25,
-    color: "#888",
-    lineHeight: 18,
-    fontSize: 13,
-    borderBottomWidth: 1,
-  },
-  complaintForm: {
-    width: "80%",
-    marginLeft: "10%",
-  },
-  complaintDateInput: {
-    fontSize: 14,
-    color: "#666",
-  },
-  complaintView: {
-    borderWidth: 1,
-    borderColor: "#eee",
-    marginBottom: 12,
-    borderRadius: 8,
-    padding: 10,
-    flexDirection: "row",
-  },
-  complaintMessageInput: {
-    fontSize: 14,
-    color: "#666",
-    borderWidth: 1,
-    borderColor: "#eee",
-    marginBottom: 12,
-    borderRadius: 8,
-    padding: 10,
-  },
+
   calendarIcon: {
     width: 20,
     height: 20,

@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import UI from "./UI";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { author, screens } from "../../App";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthenticatedUserQuery } from "../Home";
+import Splash from "../Splash";
+import { useEffect } from "react/cjs/react.development";
 export const UserSignInMutation = gql`
   mutation signin($identity: String, $secret: String) {
     authenticate: authenticateUserWithPassword(
@@ -17,6 +21,7 @@ export const UserSignInMutation = gql`
 `;
 export default function SignInScreen({ navigation }) {
   const [onUserSignInMutation, result] = useMutation(UserSignInMutation);
+  const { loading, error, data } = useQuery(AuthenticatedUserQuery);
   const onSignIn = ({ username, password }) => {
     if (!result.loading) {
       return onUserSignInMutation({
@@ -26,10 +31,17 @@ export default function SignInScreen({ navigation }) {
           data: { authenticate },
         } = result;
         author(authenticate);
-        navigation.navigate(screens.HOME);
+        AsyncStorage.setItem("@author", JSON.stringify(authenticate)).finally(
+          () => navigation.navigate(screens.HOME)
+        );
       });
     }
   };
-
+  useEffect(() => {
+    if (loading || error) return;
+    const { authenticatedUser } = data;
+    if (authenticatedUser.id) navigation.navigate(screens.HOME);
+  });
+  if (loading || error) return <Splash />;
   return <UI onSignIn={onSignIn} result={result} />;
 }

@@ -1,10 +1,18 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
 import { Text, View, TouchableOpacity, Image } from "react-native";
+import ButtonWithIcon from "../../components/Button/WithIcon";
 import { author, screens } from "../../App";
 import { styles } from "../../styles/styles";
 import Splash from "../Splash";
-export const HomeQuery = gql`
+export const UserSignOutMutation = gql`
+  mutation {
+    unauthenticate: unauthenticateUser {
+      success
+    }
+  }
+`;
+export const AuthenticatedUserQuery = gql`
   query {
     authenticatedUser {
       id
@@ -13,7 +21,7 @@ export const HomeQuery = gql`
   }
 `;
 export default function HomeScreen({ navigation, route }) {
-  const { loading, error, data } = useQuery(HomeQuery);
+  const { loading, error, data } = useQuery(AuthenticatedUserQuery);
   if (loading || error) return <Splash />;
   const { authenticatedUser } = data;
   return (
@@ -31,48 +39,28 @@ export default function HomeScreen({ navigation, route }) {
         </Text>
       </View>
       <View style={styles.boxContainer}>
-        <TouchableOpacity
-          style={styles.box}
+        <ButtonWithIcon
           onPress={() => navigation.navigate(screens.TIMEKEEPER)}
-        >
-          <Image
-            source={require("../../assets/icons/timekeeper.png")}
-            style={styles.icon}
-          ></Image>
-          <Text style={styles.boxText}>Your Workdays</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.box}
+          source={require("../../assets/icons/timekeeper.png")}
+          value={"Your Workdays"}
+        />
+        <ButtonWithIcon
           onPress={(e) => navigation.navigate(screens.SALARY)}
-        >
-          <Image
-            source={require("../../assets/icons/salary.png")}
-            style={styles.icon}
-          ></Image>
-          <Text style={styles.boxText}>Your Salary</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.box}
+          source={require("../../assets/icons/salary.png")}
+          value={"Your Salary"}
+        />
+        <ButtonWithIcon
           onPress={() => navigation.navigate(screens.COMPLAINT)}
-        >
-          <Image
-            source={require("../../assets/icons/complaint.png")}
-            style={styles.icon}
-          ></Image>
-          <Text style={styles.boxText}>New Complaint</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.box}
+          source={require("../../assets/icons/complaint.png")}
+          value={"New Complaint"}
+        />
+        <ButtonWithIcon
           onPress={() => {
             navigation.navigate(screens.SIGNIN);
           }}
-        >
-          <Image
-            source={require("../../assets/icons/logout.png")}
-            style={styles.icon}
-          ></Image>
-          <Text style={styles.boxText}>Log Out</Text>
-        </TouchableOpacity>
+          source={require("../../assets/icons/logout.png")}
+          value={"Log Out"}
+        />
       </View>
     </View>
   );
