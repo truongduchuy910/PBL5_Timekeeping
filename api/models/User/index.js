@@ -22,6 +22,7 @@ module.exports = {
     },
     isAdmin: { type: Checkbox },
     faces: { type: Relationship, ref: "Face.user", many: true },
+    shifts: { type: Relationship, ref: "Work.users", many: true },
   },
   labelField: "email",
 

@@ -6,5 +6,6 @@ export const screens = {
   SALARY: "Salary",
   SIGNIN: "SignIn",
   TIMEKEEPER: "Timekepper",
+  AUTHOR: "Author",
 };
 export const author = makeVar({});

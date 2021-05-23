@@ -31,7 +31,7 @@ export default function SignInScreen({ navigation }) {
           const {
             data: { authenticate },
           } = result;
-          if (authenticate?.name) {
+          if (authenticate?.item) {
             author(authenticate);
             AsyncStorage.setItem("@author", JSON.stringify(authenticate))
               .catch(() => {})
@@ -40,6 +40,9 @@ export default function SignInScreen({ navigation }) {
         })
         .catch((e) => {});
     }
+  };
+  const pressAuthor = () => {
+    navigation.navigate(screens.AUTHOR);
   };
   useEffect(() => {
     if (loading) return () => {};
@@ -50,8 +53,8 @@ export default function SignInScreen({ navigation }) {
           .finally(() => author({}));
 
     const { authenticatedUser } = data;
-    if (authenticatedUser?.name) navigation.navigate(screens.HOME);
+    if (authenticatedUser?.id) navigation.navigate(screens.HOME);
   });
   if (loading || error) return <Splash error={error} />;
-  return <UI onSignIn={onSignIn} result={result} />;
+  return <UI onSignIn={onSignIn} result={result} pressAuthor={pressAuthor} />;
 }

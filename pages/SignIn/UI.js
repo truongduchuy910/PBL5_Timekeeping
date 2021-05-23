@@ -2,13 +2,15 @@ import {
   Image,
   Text,
   TextInput,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 import { styles } from "../../styles/styles";
 import React, { useState } from "react";
 import Button from "../../components/Button";
-export default function UI({ onSignIn, result }) {
+import AnimationEmoji from "../../components/Animation/Emoji";
+export default function UI({ onSignIn, result, pressAuthor }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const clickSignIn = async () => {
@@ -46,23 +48,48 @@ export default function UI({ onSignIn, result }) {
             paddingVertical: "10%",
           }}
         >
-          <TextInput
-            style={styles.textInput}
-            placeholder="Username"
-            onChangeText={setUsername}
-          />
-          <TextInput
-            style={styles.textInput}
-            placeholder="Password"
-            onChangeText={setPassword}
-            secureTextEntry
-          />
-          <Button
-            loading={result.loading}
-            onPress={clickSignIn}
-            value={"Sign In"}
-          />
+          <form
+            noValidate
+            onSubmit={(e) => {
+              clickSignIn();
+              e.preventDefault();
+            }}
+          >
+            <TextInput
+              style={styles.textInput}
+              placeholder="Username"
+              onChangeText={setUsername}
+              keyboardType={"numeric"}
+            />
+            <TextInput
+              style={styles.textInput}
+              placeholder="Password"
+              onChangeText={setPassword}
+              secureTextEntry
+              keyboardType={"numeric"}
+            />
+            <Button
+              loading={result.loading}
+              onPress={clickSignIn}
+              icon={"🚀"}
+              value={"Sign In"}
+              type="submit"
+            />
+          </form>
           <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
+          <TouchableOpacity
+            style={{
+              color: "#aaa",
+              textAlign: "center",
+              marginTop: 21,
+            }}
+            onPress={pressAuthor}
+          >
+            <AnimationEmoji
+              emojis={["🤦‍♂️🙆‍♂️", "🙆‍♂️🙋‍♂️", "🙋‍♂️🤦‍♂️", "🤷‍♂️🤷‍♂️"]}
+              as={Text}
+            />
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>

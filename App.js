@@ -21,6 +21,7 @@ import Salary from "./pages/Salary";
 import Complaint from "./pages/Complaint";
 import SignIn from "./pages/SignIn";
 import { author, screens } from "./pages/config";
+import Author from "./pages/Author";
 const uri = "https://timekeeping.itoa.vn/admin/api";
 const client = new ApolloClient({
   uri,
@@ -40,7 +41,6 @@ const client = new ApolloClient({
   ),
 });
 const Stack = createStackNavigator();
-
 AsyncStorage.getItem("@author")
   .then((value) => {
     try {
@@ -95,6 +95,11 @@ function App() {
             name={screens.TIMEKEEPER}
             component={Timekeeper}
             options={{ title: "Your Workdays" }}
+          />
+          <Stack.Screen
+            name={screens.AUTHOR}
+            component={Author}
+            options={{ title: "Author" }}
           />
         </Stack.Navigator>
       </NavigationContainer>

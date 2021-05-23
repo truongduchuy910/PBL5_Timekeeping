@@ -39,7 +39,6 @@ module.exports = {
             allShifts {
               id
               checkin
-              checkout
             }
           }
         `,
@@ -74,6 +73,7 @@ module.exports = {
             data: {
               shift: { connect: { id: validShift.id } },
               identity: { connect: { id: user.id } },
+              checkin: resolvedData.checkin,
             },
           },
         });
