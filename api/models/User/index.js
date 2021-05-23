@@ -1,4 +1,9 @@
-const { Text, Password, Checkbox } = require("@keystonejs/fields");
+const {
+  Text,
+  Password,
+  Checkbox,
+  Relationship,
+} = require("@keystonejs/fields");
 const { gql } = require("@apollo/client");
 const { user } = require("../access");
 module.exports = {
@@ -16,28 +21,16 @@ module.exports = {
       type: Password,
     },
     isAdmin: { type: Checkbox },
+    faces: { type: Relationship, ref: "Face.user", many: true },
   },
   labelField: "email",
 
   hooks: {
     // https://www.keystonejs.com/api/hooks/#validateinput
     validateInput: async ({ existingItem, resolvedData, context }) => {
-      if (!existingItem || !existingItem.role) {
-        const {
-          data: { createUserRole },
-          error,
-        } = await context.executeGraphQL({
-          query: gql`
-            mutation {
-              createUserRole(data: {}) {
-                id
-              }
-            }
-          `,
-        });
-        if (createUserRole) resolvedData.role = createUserRole.id;
+      if (resolvedData.faces) {
+        // make a request
       }
-      return resolvedData;
     },
   },
   access: user,

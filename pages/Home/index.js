@@ -1,8 +1,8 @@
 import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, Image } from "react-native";
+import { screens } from "../config";
 import ButtonWithIcon from "../../components/Button/WithIcon";
-import { author, screens } from "../../App";
 import { styles } from "../../styles/styles";
 import Splash from "../Splash";
 export const UserSignOutMutation = gql`

@@ -22,10 +22,8 @@ const user = {
     const { item: user } = authentication;
     if (user) {
       if (user.isAdmin) return true;
-      if (user.isSeller) return { id: user.id };
-      return { OR: [{ page: { domain_contains: domain } }, { id: user.id }] };
+      return { id: user.id };
     }
-    return { page: { domain_contains: getDomain(context) } };
   },
   create: allCanMutation,
   update: ({ authentication: { item: user } }) => {
@@ -70,25 +68,15 @@ const getPage = async ({ domain, context }) => {
     }
   }
 };
-const sellerItemRead = async ({
-  existingItem = {},
-  authentication,
-  context,
-}) => {
-  if (existingItem.isDraft) return false;
+const sellerItemRead = async ({ listKey, authentication }) => {
   const { item: user } = authentication;
-  const domain = getDomain(context);
-  getPage({ domain, context });
   if (user) {
     if (user.isAdmin) return true;
-    if (user.isSeller) return { createdBy: { id: user.id } };
+    if (listKey === "Work" || listKey === "Image")
+      return { identity: { id: user.id } };
+    return { createdBy: { id: user.id } };
   }
-  const author = createdById[domain]
-    ? { id: createdById[domain] }
-    : { page: { domain_contains: domain } };
-  return {
-    createdBy: author,
-  };
+  return false;
 };
 const sellerItem = {
   read: sellerItemRead,
@@ -99,45 +87,15 @@ const sellerItem = {
 
 const publicItemRead = ({ authentication, context }) => {
   const { item: user } = authentication;
-  const domain = getDomain(context);
-  getPage({ domain, context });
-  if (user) {
-    if (user.isAdmin) return true;
-    if (user.isSeller)
-      return {
-        of: { id: user.id },
-        of_is_null: false,
-      };
-    const author = createdById[domain]
-      ? { id: createdById[domain] }
-      : { page: { domain_contains: domain } };
-    return { OR: [{ createdBy: author }, { of: author }] };
-  }
-  return {
-    createdBy_is_null: true,
-    of: { page: { domain_contains: domain } },
-  };
+  return Boolean(user);
 };
 const publicItem = {
   /**
    * Các Model sử dụng phân quyền này cần có field of.
    */
   read: publicItemRead,
-
   create: allCanMutation,
   update: allCanMutation,
   delete: allCanMutation,
 };
-function getDomain(context = {}) {
-  if (context.req)
-    if (context.req.headers)
-      if (context.req.headers.referer) {
-        const { referer } = context.req.headers;
-        const domain = referer.split("/")[2] || referer;
-        return domain;
-      } else console.log(context.req.headers.referer);
-    else console.log(context.req.headers);
-  else console.log(context.req);
-  throw new Error("Truy cập bị từ chối");
-}
 module.exports = { sellerItem, publicItem, user };

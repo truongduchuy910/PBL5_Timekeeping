@@ -1,15 +1,15 @@
 import React from "react";
 import { Text, View } from "react-native";
-export default function Splash() {
+export default function Splash({ error }) {
   return (
     <View
       style={{
         flex: 1,
         justifyContent: "center",
-        alignItindexems: "center",
+        alignItems: "center",
       }}
     >
-      <Text>Loading...</Text>
+      <Text>{error ? error.toString() : "Loading..."}</Text>
     </View>
   );
 }

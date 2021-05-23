@@ -2,6 +2,7 @@ var user = require("./User");
 var shift = require("./Shift");
 var work = require("./Work");
 var image = require("./Image");
+var face = require("./Face");
 /**
  *
  */
@@ -40,10 +41,11 @@ class Models extends Extension {
     /**
      * USER
      */
-    this.keystone.createList("User", user);
     this.keystone.createList("Shift", { ...shift, plugins: [at, by] });
     this.keystone.createList("Work", { ...work, plugins: [at, by] });
     this.keystone.createList("Image", { ...image, plugins: [at, by] });
+    this.keystone.createList("Face", { ...face, plugins: [at, by] });
+    this.keystone.createList("User", user);
   }
 }
 module.exports = { Models };

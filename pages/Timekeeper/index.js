@@ -1,6 +1,7 @@
 import UI from "./UI";
 import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
+import Splash from "../Splash";
 export const SHIFTS_QUERY = gql`
   query ($where: ShiftWhereInput) {
     allShifts(where: $where) {
@@ -18,7 +19,7 @@ export default function TimekeeperScreen({ navigation }) {
   const { loading, error, data } = useQuery(SHIFTS_QUERY, {
     variables: { where: { checkin_lt } },
   });
-  if (loading || error) return "loading...";
+  if (loading || error) return <Splash error={error} />;
   const { allShifts } = data;
   const onSelectDate = (date) => {
     setDate(date);

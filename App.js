@@ -20,14 +20,7 @@ import Timekeeper from "./pages/Timekeeper";
 import Salary from "./pages/Salary";
 import Complaint from "./pages/Complaint";
 import SignIn from "./pages/SignIn";
-export const screens = {
-  HOME: "Home",
-  COMPLAINT: "Complaint",
-  SALARY: "Salary",
-  SIGNIN: "SignIn",
-  TIMEKEEPER: "Timekepper",
-};
-export const author = makeVar({});
+import { author, screens } from "./pages/config";
 const uri = "https://timekeeping.itoa.vn/admin/api";
 const client = new ApolloClient({
   uri,
@@ -48,15 +41,16 @@ const client = new ApolloClient({
 });
 const Stack = createStackNavigator();
 
-AsyncStorage.getItem("@author").then((value) => {
-  try {
-    const authenticate = JSON.parse(value);
-    if (authenticate) author(authenticate);
-  } catch (e) {
-    console.log(e);
-    AsyncStorage.removeItem("@author");
-  }
-});
+AsyncStorage.getItem("@author")
+  .then((value) => {
+    try {
+      const authenticate = JSON.parse(value);
+      if (authenticate) author(authenticate);
+    } catch (e) {
+      AsyncStorage.removeItem("@author").catch(() => {});
+    }
+  })
+  .catch(() => {});
 
 function App() {
   return (

@@ -1,13 +1,17 @@
-const { DateTimeUtc, Relationship } = require("@keystonejs/fields");
-let { sellerItem } = require("../access");
+const { Relationship, DateTime } = require("@keystonejs/fields");
+let { publicItem } = require("../access");
 
 module.exports = {
   fields: {
-    checkin: { type: DateTimeUtc },
+    checkin: {
+      type: DateTime,
+      yearPickerType: "select",
+    },
     checkout: {
-      type: DateTimeUtc,
+      type: DateTime,
+      yearPickerType: "select",
     },
     works: { type: Relationship, ref: "Work.shift", many: true },
   },
-  access: sellerItem,
+  access: publicItem,
 };

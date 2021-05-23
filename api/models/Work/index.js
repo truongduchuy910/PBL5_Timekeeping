@@ -9,6 +9,7 @@ module.exports = {
     },
     shift: { type: Relationship, ref: "Shift.works" },
     images: { type: Relationship, ref: "Image.work", may: true },
+    identity: { type: Relationship, ref: "User" },
   },
   access: sellerItem,
 };

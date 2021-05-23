@@ -3,25 +3,7 @@ import { Text, View } from "react-native";
 import { styles } from "../../styles/styles";
 import { Calendar } from "react-native-calendars";
 import Container from "../../components/Container";
-export default function TimekeeperScreen({
-  allShifts,
-  navigation,
-  onSelectDate,
-}) {
-  const getCurrentDay = () => {
-    var date = new Date().getDate();
-    if (date < 10) {
-      date = "0" + date;
-    }
-    var month = (new Date().getMonth() + 1).toString();
-    if (month < 10) {
-      month = "0" + month;
-    }
-    var year = new Date().getFullYear();
-    var today = year + "-" + month + "-" + date;
-    return today;
-  };
-
+export default function TimekeeperScreen({ allShifts, onSelectDate }) {
   const currentMonth = () => {
     return {
       "2021-04-03": { marked: true, dotColor: "red" },
@@ -48,7 +30,8 @@ export default function TimekeeperScreen({
 
   return (
     <Container>
-      <Calendar
+      <Text>...</Text>
+      {/* <Calendar
         markedDates={markedDates}
         theme={{
           arrowColor: "#24c48a",
@@ -66,16 +49,20 @@ export default function TimekeeperScreen({
         onMonthChange={(month) => monthChange(month)}
         firstDay={1}
         style={styles.calendar}
-      />
-      {allShifts.map((shift) => {
-        return (
-          <View key={shift.id} style={styles.notification}>
-            <Text style={styles.notificationText}>
-              🎉 You checked in at {new Date(shift.checkin).toLocaleString()}
-            </Text>
-          </View>
-        );
-      })}
+      /> */}
+      {
+        // allShifts.map((shift) => {
+        //   const date = new Date(shift.checkin);
+        //   return (
+        //     <View key={shift.id} style={styles.notification}>
+        //       <Text style={styles.notificationText}>
+        //         🎉 You checked in at
+        //         {/* {date.toLocaleString()} */}
+        //       </Text>
+        //     </View>
+        //   );
+        // })
+      }
     </Container>
   );
 }

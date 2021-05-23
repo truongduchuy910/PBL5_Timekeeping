@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
-export default function Button({ loading, value, onPress }) {
+export default function Button({ loading, value = "button", onPress }) {
   return (
     <TouchableOpacity
       disabled={loading}

@@ -7,33 +7,17 @@ import {
   Modal,
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
 } from "react-native";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import ComplaintModal from "./ComplaintModal";
 import Container from "../../components/Container";
 import Button from "../../components/Button";
 export default function ComplaintScreen({ navigation }) {
-  const getCurrentDay = () => {
-    var date = new Date().getDate();
-    if (date < 10) {
-      date = "0" + date;
-    }
-    var month = (new Date().getMonth() + 1).toString();
-    if (month < 10) {
-      month = "0" + month;
-    }
-    var year = new Date().getFullYear();
-    var today = year + "-" + month + "-" + date;
-    return today;
-  };
-
-  const [date, setDate] = useState(getCurrentDay);
-
+  const [date, setDate] = useState(new Date());
   const [isModalShow, setIsModalShow] = useState(false);
 
   const pickDate = (date) => {
-    setDate(date.dateString);
+    setDate(new Date(date.timestamp));
     setIsModalShow(false);
   };
 
@@ -95,7 +79,7 @@ export default function ComplaintScreen({ navigation }) {
                 color: "#666",
               }}
             >
-              {date}
+              {date?.toLocaleString() || ""}
             </Text>
             <TouchableOpacity
               style={{ marginLeft: "auto" }}
