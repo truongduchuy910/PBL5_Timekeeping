@@ -1,56 +1,114 @@
------------- Upload by Urls ------------------
+const fetch = require("node-fetch");
+class TFace {
+  mode = "Test";
+  url =
+    this.mode === "Test"
+      ? `http://d3f205c6b472.ngrok.io`
+      : `https://tfacev1project.herokuapp.com`;
 
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({"url_list":["http://cb.dut.udn.vn/ImageSV/18/102180229.jpg","https://t-f18-zpg.zdn.vn/480/1632328878460392940/0af12ee54833bd6de422.jpg","https://t-f37-zpg.zdn.vn/480/3698243211045233685/ffff6b0500d3f58dacc2.jpg"],"txtusername":"Thuan2"});
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("http://0.0.0.0:8000/uploadByUrls", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-  
-  ------------ Identified by Urls ------------------
-  
-  var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-var raw = "{\n    \"url_list\": [\"http://cb.dut.udn.vn/ImageSV/18/102180229.jpg\", \"https://t-f18-zpg.zdn.vn/480/1632328878460392940/0af12ee54833bd6de422.jpg\", \"https://t-f37-zpg.zdn.vn/480/3698243211045233685/ffff6b0500d3f58dacc2.jpg\"],\n}";
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("http://0.0.0.0:8000/identifiedStrList", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-  
- ------------ Delete by id ------------------
- 
- var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-
-var raw = JSON.stringify({"id":"Thuan2"});
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("http://0.0.0.0:8000/deleteById", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+  option = {
+    headers: {
+      Accept: "application/json",
+      "Content-type": "application/json",
+    },
+    method: "POST",
+    redirect: "follow",
+  };
+  constructor(mode) {
+    if (mode === "production") this.mode = "";
+  }
+  /**
+   * @param {Array.<String>} urls
+   * @param {String} id
+   * @returns
+   */
+  async uploadByUrls(urls, id) {
+    const url = `${this.url}/uploadByUrls${this.mode}`;
+    console.log(url);
+    const body = JSON.stringify({
+      url_list: urls,
+      txtusername: id,
+    });
+    const response = await fetch(url, {
+      ...this.option,
+      body,
+    });
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else console.error(response.status, response.statusText);
+  }
+  /**
+   * @param {Array.<String>} urls
+   * @returns {name_list_rp: Array.<String>}
+   */
+  async getIdByUrls(urls) {
+    const url = `${this.url}/identifiedStrList${this.mode}`;
+    console.log(url);
+    const body = JSON.stringify({
+      url_list: urls,
+    });
+    const response = await fetch(url, {
+      ...this.option,
+      body,
+    });
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else console.error(response.statusText);
+  }
+  /**
+   * @param {String} id
+   * @returns
+   */
+  async deleteById(id) {
+    const url = `${this.url}/deleteById${this.mode}`;
+    console.log(url);
+    const body = JSON.stringify({
+      id,
+    });
+    const response = await fetch(url, {
+      ...this.option,
+      body,
+    });
+    if (response.status === 200) {
+      const data = await response.json();
+      return data;
+    } else console.error(response.statusText);
+  }
+}
+(async () => {
+  const tface = new TFace();
+  const { message } = await tface.uploadByUrls(
+    [
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+    ],
+    "tran-ngoc-huy"
+  );
+  console.log(message);
+  const { name_list_rp } = await tface.getIdByUrls([
+    "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+  ]);
+  console.log(name_list_rp);
+  const { message: deleteMessage } = await tface.deleteById("1");
+  console.log(deleteMessage);
+})();
