@@ -1,7 +1,7 @@
 let { File, Relationship, Checkbox, Text } = require("@keystonejs/fields");
 let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem } = require("../access");
-const { default: gql } = require("graphql-tag");
+const { gql } = require("@apollo/client");
 
 module.exports = {
   fields: {
@@ -35,39 +35,34 @@ module.exports = {
         await imageAdapter.delete(existingItem.file);
       }
     },
-    validateInput: async ({ operation, resolvedData, context }) => {
-      const { data, error } = await context.executeGraphQL({
+    validateInput: async ({
+      operation,
+      existingItem,
+      resolvedData,
+      context,
+    }) => {
+      /**
+       *  fetch api simulation
+       */
+      const { data } = await context.executeGraphQL({
         query: gql`
           query {
             allUsers {
               id
             }
-            allShifts {
-              id
-              checkin
-            }
           }
         `,
       });
-      const { allUsers, allShifts } = data;
-      // fetch api
+      const { allUsers } = data;
       const user = allUsers[Math.floor(Math.random() * allUsers.length)];
-      //
       resolvedData.identity = user.id;
-      const current = new Date();
-      var validShift;
-      allShifts.map((shift) => {
-        const checkin = new Date(shift.checkin);
-        const valid =
-          current.getHours() * 60 + current.getMinutes() <
-          checkin.getHours() * 60 + checkin.getMinutes();
-        if (valid) {
-          resolvedData.onTime = valid;
-          validShift = shift;
-        }
-      });
-      if (operation === "create" && validShift && user) {
-        const { data } = await context.executeGraphQL({
+      /**
+       * create work for identity
+       */
+      const { identity } = resolvedData;
+      console.log(existingItem);
+      if (identity) {
+        const { data, errors } = await context.executeGraphQL({
           query: gql`
             mutation($data: WorkCreateInput) {
               createWork(data: $data) {
@@ -77,15 +72,14 @@ module.exports = {
           `,
           variables: {
             data: {
-              shift: { connect: { id: validShift.id } },
-              identity: { connect: { id: user.id } },
-              checkin: resolvedData.checkin,
+              worker: { connect: { id: identity } },
             },
           },
         });
-        if (!data) return;
+        console.log(data, errors);
+        if (errors) throw errors;
+        if (!data || !data.createWork) throw new Error("cannot create");
         const { createWork } = data;
-        if (!createWork) return;
         resolvedData.work = createWork.id;
       }
     },
