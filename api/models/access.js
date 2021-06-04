@@ -74,7 +74,7 @@ const sellerItemRead = async ({ listKey, authentication }) => {
   if (user) {
     if (user.isAdmin) return true;
     if (listKey === "Face") return { user: { id: user.id } };
-    if (listKey === "Image") return { identity: { id: user.id } };
+    if (listKey === "Image") return { identity: user.id };
     if (listKey === "Work") return { worker: { id: user.id } };
     return { createdBy: { id: user.id } };
   }
