@@ -69,11 +69,13 @@ const getPage = async ({ domain, context }) => {
   }
 };
 const sellerItemRead = async ({ listKey, authentication }) => {
+  if (listKey === "Shift") return true;
   const { item: user } = authentication;
   if (user) {
     if (user.isAdmin) return true;
-    if (listKey === "Work" || listKey === "Image")
-      return { identity: { id: user.id } };
+    if (listKey === "Face") return { user: { id: user.id } };
+    if (listKey === "Image") return { identity: { id: user.id } };
+    if (listKey === "Work") return { worker: { id: user.id } };
     return { createdBy: { id: user.id } };
   }
   return false;
