@@ -4,7 +4,8 @@ const {
   Checkbox,
   Relationship,
 } = require("@keystonejs/fields");
-const { gql } = require("@apollo/client");
+// const icons = ["🙇‍♂️", "💁‍♂️", "🙆‍♂️", "🙅‍♂️", "🙋‍♂️", "🤷‍♂️", "🙎‍♂️", "🤦‍♂️", "🙍‍♂️"];
+// ${icons[Math.floor(Math.random() * icons.length)]}
 const { user } = require("../access");
 module.exports = {
   fields: {
@@ -22,10 +23,7 @@ module.exports = {
     },
     isAdmin: { type: Checkbox },
     faces: { type: Relationship, ref: "Face.user", many: true },
-    shifts: { type: Relationship, ref: "Work.users", many: true },
   },
-  labelField: "email",
-
   hooks: {
     // https://www.keystonejs.com/api/hooks/#validateinput
     validateInput: async ({ existingItem, resolvedData, context }) => {
@@ -33,6 +31,11 @@ module.exports = {
         // make a request
       }
     },
+  },
+  labelResolver: (item) => `${item.name}`,
+  adminConfig: {
+    defaultColumns: "email, phone, isAdmin",
+    defaultSort: "createdAt",
   },
   access: user,
 };

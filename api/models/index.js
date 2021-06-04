@@ -36,7 +36,7 @@ class Models extends Extension {
     /**
      * DEFAULT PLUGIN
      */
-    const at = atTracking();
+    const at = atTracking({ format: "hh:mm dd/MM/yyyy" });
     const by = byTracking();
     /**
      * USER

@@ -1,5 +1,6 @@
-const { Relationship, DateTime, Integer } = require("@keystonejs/fields");
-let { publicItem } = require("../access");
+const { Relationship, DateTime, Integer, Text } = require("@keystonejs/fields");
+let { publicItem, sellerItem } = require("../access");
+const format = new Intl.NumberFormat().format;
 
 module.exports = {
   fields: {
@@ -11,8 +12,17 @@ module.exports = {
       type: Integer,
       label: "Lương",
     },
-    works: { type: Relationship, ref: "Work.shift", many: true },
-    users: { type: Relationship, ref: "User.shifts", many: true },
+    name: { type: Text },
+    workers: { type: Relationship, ref: "User", many: true },
+  },
+
+  labelResolver: (item) =>
+    `⏱ ${new Date(item.checkin).toLocaleTimeString()} - ${format(
+      item.price
+    )} hourly`,
+  adminConfig: {
+    defaultColumns: "name, workers, updatedAt",
+    defaultSort: "createdAt",
   },
   access: publicItem,
 };

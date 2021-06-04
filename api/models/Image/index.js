@@ -1,4 +1,4 @@
-let { File, Relationship, Checkbox } = require("@keystonejs/fields");
+let { File, Relationship, Checkbox, Text } = require("@keystonejs/fields");
 let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem } = require("../access");
 const { default: gql } = require("graphql-tag");
@@ -17,12 +17,18 @@ module.exports = {
       },
       isRequired: true,
     },
+    identity: { type: Text },
     work: { type: Relationship, ref: "Work.images" },
-    onTime: { type: Checkbox },
-    identity: { type: Relationship, ref: "User" },
   },
-
   access: sellerItem,
+  labelResolver: (item) =>
+    `${item.identity ? "🎉" : "🖼"} ${new Date(
+      item.createdAt
+    ).toLocaleString()}`,
+  adminConfig: {
+    defaultColumns: "work, file, updatedAt",
+    defaultSort: "createdAt",
+  },
   hooks: {
     afterDelete: async ({ existingItem = {} }) => {
       if (existingItem.file) {

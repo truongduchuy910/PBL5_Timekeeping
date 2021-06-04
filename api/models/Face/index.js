@@ -17,9 +17,14 @@ module.exports = {
       },
       isRequired: true,
     },
-    user: { type: Relationship, ref: "User.faces" },
+    user: { type: Relationship, ref: "User.faces", many: false },
   },
-
+  labelResolver: (item) => `👤 ${new Date(item.createdAt).toLocaleString()}`,
+  labelName: "Face for training",
+  adminConfig: {
+    defaultColumns: "file, user, updatedAt",
+    defaultSort: "createdAt",
+  },
   access: sellerItem,
   hooks: {
     afterDelete: async ({ existingItem = {} }) => {
