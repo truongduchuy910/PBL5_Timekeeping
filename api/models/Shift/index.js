@@ -14,6 +14,7 @@ module.exports = {
     },
     name: { type: Text },
     workers: { type: Relationship, ref: "User", many: true },
+    works: { type: Relationship, ref: "Work.shift", many: true },
   },
 
   labelResolver: (item) =>

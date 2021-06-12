@@ -2,6 +2,7 @@ let { File, Relationship, Checkbox, Text } = require("@keystonejs/fields");
 let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem } = require("../access");
 const { gql } = require("@apollo/client");
+const { GraphQLError } = require("graphql");
 
 module.exports = {
   fields: {
@@ -60,7 +61,6 @@ module.exports = {
        * create work for identity
        */
       const { identity } = resolvedData;
-      console.log(existingItem);
       if (identity) {
         const { data, errors } = await context.executeGraphQL({
           query: gql`
@@ -76,9 +76,8 @@ module.exports = {
             },
           },
         });
-        console.log(data, errors);
-        if (errors) throw errors;
-        if (!data || !data.createWork) throw new Error("cannot create");
+        if (errors) throw new GraphQLError(errors.toString());
+        if (!data || !data.createWork) throw new GraphQLError("cannot create");
         const { createWork } = data;
         resolvedData.work = createWork.id;
       }
