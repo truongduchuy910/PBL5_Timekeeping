@@ -22,6 +22,7 @@ module.exports = {
       type: Password,
     },
     isAdmin: { type: Checkbox },
+    isSeller: { type: Checkbox, label: "Kích hoạt" },
     faces: { type: Relationship, ref: "Face.user", many: true },
   },
   hooks: {
