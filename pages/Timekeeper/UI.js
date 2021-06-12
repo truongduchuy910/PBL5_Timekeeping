@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { styles } from "../../styles/styles";
 import { Calendar } from "react-native-calendars";
@@ -31,26 +31,32 @@ export default function TimekeeperScreen({
       "2021-05-02": { marked: true, dotColor: "red" },
     });
   };
-  var worked = {};
-  if (date && date.dateString)
-    worked[date.dateString] = {
-      dots: [
-        {
-          color: "red",
-        },
-      ],
-    };
-  allWorks.map((work) => {
-    console.log(work.createdAt);
-    const date = new Date(work.createdAt).toISOString().slice(0, 10);
 
-    const dot = {
-      color: "blue",
-    };
-    if (worked[date]) worked[date].dots.push(dot);
-    else worked[date] = { dots: [dot] };
-  });
-  console.log(worked);
+  var worked = useMemo(() => {
+    var worked = {};
+    if (date && date.dateString)
+      worked[date.dateString] = {
+        dots: [
+          {
+            color: "red",
+          },
+        ],
+      };
+    allWorks.map((work) => {
+      const date = new Date(work.createdAt)
+        .toLocaleDateString("vi-VN")
+        .split("/")
+        .map((n) => (n.length > 1 ? n : "0" + n))
+        .reverse()
+        .join("-");
+      const dot = {
+        color: "blue",
+      };
+      if (worked[date]) worked[date].dots.push(dot);
+      else worked[date] = { dots: [dot] };
+    });
+    return worked;
+  }, [allWorks]);
   return (
     <Container>
       <Calendar
@@ -94,7 +100,7 @@ export default function TimekeeperScreen({
                 fontWeight: "bold",
               }}
             >
-              🎉 You checked in at {date.toLocaleString()}
+              🎉 You checked in at {date.toLocaleString("vi-VN")}
             </Text>
           </View>
         );

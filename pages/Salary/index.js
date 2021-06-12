@@ -1,85 +1,72 @@
-import React, { useState } from "react";
-import { Text, View, Picker } from "react-native";
-import Container from "../../components/Container";
-import { styles } from "../../styles/styles";
-export default function SalaryScreen({ navigation }) {
-  const getCurrentMonth = () => {
-    var month = (new Date().getMonth() + 1).toString();
-    if (month < 10) {
-      month = "0" + month;
+import React from "react";
+import UI from "./UI";
+import { gql, useQuery } from "@apollo/client";
+import { useState } from "react/cjs/react.development";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const WORKS_QUERY = gql`
+  query ($where: WorkWhereInput) {
+    allWorks(where: $where) {
+      id
+      createdAt
+      price
+      onTime
     }
-    return month;
-  };
+  }
+`;
+export default function SalaryScreen({
+  navigation,
+  route: {
+    params: { screen },
+  },
+}) {
+  if (screen) AsyncStorage.setItem("@screen", screen);
+  else AsyncStorage.removeItem("@screen");
+  const [where, setWhere] = useState({
+    createdAt_lt: null,
+    createdAt_gt: null,
+  });
+  const [diff, setDiff] = useState(0);
+  function onChange(month) {
+    var date = new Date();
+    //
+    var lt = new Date(date.getFullYear(), Number(month), 0);
 
-  const getCurrentYear = () => {
-    return new Date().getFullYear().toString();
-  };
+    const createdAt_lt = lt.toISOString();
+    //
+    var gt = new Date(date.getFullYear(), Number(month) - 1, 0);
 
-  const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth);
-  const [selectedYear, setSelectedYear] = useState(getCurrentYear);
+    const createdAt_gt = gt.toISOString();
+    const t = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    const diff = Math.round(Math.abs((lt - gt) / t));
+    setDiff(diff);
+    setWhere({ createdAt_lt, createdAt_gt });
 
+    //
+  }
+  const {
+    loading,
+    error,
+    data = {},
+    previousData = {},
+  } = useQuery(WORKS_QUERY, {
+    variables: { where },
+  });
+  const { allWorks = [] } = data || previousData;
+  var salary = 0;
+  var working = allWorks.length;
+  var late = 0;
+  allWorks.map((work) => {
+    if (!work.onTime) late++;
+    salary += work.price * (work.onTime ? 1 : 0.99);
+  });
   return (
-    <Container>
-      <View style={styles.salaryBox}>
-        <View style={styles.salaryFirstLine}>
-          <Text style={styles.salaryFirstText}>
-            {selectedMonth} - {selectedYear}
-          </Text>
-        </View>
-        <View style={styles.salaryLine}>
-          <Text style={styles.salaryText}>Workdays: </Text>
-          <Text style={styles.salaryNumber}>22 </Text>
-        </View>
-        <View style={styles.salaryLine}>
-          <Text style={styles.salaryText}>Days late for work: </Text>
-          <Text style={styles.salaryNumber}>1 </Text>
-        </View>
-        <View style={styles.salaryLine}>
-          <Text style={styles.salaryText}>Days off: </Text>
-          <Text style={styles.salaryNumber}>8 </Text>
-        </View>
-        <View style={styles.salaryLastLine}>
-          <Text style={styles.salaryText}>Your salary: </Text>
-          <Text style={styles.salaryNumber}>$100,000 </Text>
-        </View>
-      </View>
-
-      <View style={styles.pickerContainer}>
-        <View style={styles.picker}>
-          <Picker
-            selectedValue={selectedMonth}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedMonth(itemValue)
-            }
-            itemStyle={styles.pickerText}
-          >
-            <Picker.Item label="January" value="01" />
-            <Picker.Item label="February" value="02" />
-            <Picker.Item label="March" value="03" />
-            <Picker.Item label="April" value="04" />
-            <Picker.Item label="May" value="05" />
-            <Picker.Item label="June" value="06" />
-            <Picker.Item label="July" value="07" />
-            <Picker.Item label="August" value="08" />
-            <Picker.Item label="September" value="09" />
-            <Picker.Item label="October" value="10" />
-            <Picker.Item label="November" value="11" />
-            <Picker.Item label="December" value="12" />
-          </Picker>
-        </View>
-        <View style={styles.picker}>
-          <Picker
-            selectedValue={selectedYear}
-            onValueChange={(itemValue, itemIndex) => setSelectedYear(itemValue)}
-            itemStyle={styles.pickerText}
-          >
-            <Picker.Item label="2019" value="2019" />
-            <Picker.Item label="2020" value="2020" />
-            <Picker.Item label="2021" value="2021" />
-            <Picker.Item label="2022" value="2022" />
-          </Picker>
-        </View>
-      </View>
-    </Container>
+    <UI
+      onChange={onChange}
+      salary={salary}
+      working={working}
+      late={late}
+      diff={diff}
+    />
   );
 }

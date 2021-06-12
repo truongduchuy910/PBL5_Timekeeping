@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import UI from "./UI";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useApolloClient, useMutation, useQuery } from "@apollo/client";
 import { author, screens } from "../config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthenticatedUserQuery } from "../Home";
@@ -20,6 +20,8 @@ export const UserSignInMutation = gql`
   }
 `;
 export default function SignInScreen({ navigation }) {
+  const client = useApolloClient();
+
   const [onUserSignInMutation, result] = useMutation(UserSignInMutation);
   const { loading, error, data, refetch } = useQuery(AuthenticatedUserQuery);
   const onSignIn = ({ username, password }) => {
@@ -37,24 +39,22 @@ export default function SignInScreen({ navigation }) {
               .catch(() => {})
               .finally(refetch);
           }
+          client.clearStore();
+          // navigation.navigate(screens.SIGNIN);
+
+          navigation.navigate(screens.HOME);
         })
-        .catch((e) => {});
+        .catch((e) => {})
+        .finally(() => {
+          client.resetStore();
+        });
     }
   };
   const pressAuthor = () => {
     navigation.navigate(screens.AUTHOR);
   };
-  useEffect(() => {
-    if (loading) return () => {};
-    if (error)
-      return () =>
-        AsyncStorage.removeItem("@author")
-          .catch(() => {})
-          .finally(() => author({}));
 
-    const { authenticatedUser } = data;
-    if (authenticatedUser?.id) navigation.navigate(screens.HOME);
-  });
-  if (loading || error) return <Splash error={error} />;
+  if (loading) return <Splash />;
+  if (data?.authenticatedUser) navigation.navigate(screens.HOME);
   return <UI onSignIn={onSignIn} result={result} pressAuthor={pressAuthor} />;
 }

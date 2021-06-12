@@ -45,7 +45,6 @@ export default function TimekeeperScreen({
     setDate(date);
   };
   const { allWorks = [], details = [] } = data || previousData || {};
-  console.log(allWorks, details);
   return (
     <UI
       allWorks={allWorks}

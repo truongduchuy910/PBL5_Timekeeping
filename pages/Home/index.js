@@ -6,6 +6,7 @@ import ButtonWithIcon from "../../components/Button/WithIcon";
 import Splash from "../Splash";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UI from "./UI";
+
 export const UserSignOutMutation = gql`
   mutation {
     unauthenticate: unauthenticateUser {
@@ -19,6 +20,12 @@ export const AuthenticatedUserQuery = gql`
       id
       name
     }
+    allWorks(first: 1, sortBy: createdAt_DESC) {
+      id
+      createdAt
+      price
+      onTime
+    }
   }
 `;
 export default function HomeScreen({ navigation, route }) {
@@ -26,7 +33,11 @@ export default function HomeScreen({ navigation, route }) {
     useMutation(UserSignOutMutation);
   const { loading, error, data } = useQuery(AuthenticatedUserQuery);
   if (loading || error) return <Splash />;
-  const { authenticatedUser } = data;
+  const {
+    authenticatedUser,
+    allWorks: [work],
+  } = data;
+
   const pressSignOut = () => {
     if (!resultSignOutMutation.loading)
       onUserSignOutMutation()
@@ -51,6 +62,7 @@ export default function HomeScreen({ navigation, route }) {
       resultSignOutMutation={resultSignOutMutation}
       pressSignOut={pressSignOut}
       navigation={navigation}
+      work={work}
     />
   );
 }

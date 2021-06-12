@@ -9,6 +9,7 @@ export default function UI({
   resultSignOutMutation,
   pressSignOut,
   navigation,
+  work,
 }) {
   return (
     <View style={styles.HomeContainer}>
@@ -19,11 +20,14 @@ export default function UI({
         ></Image>
         <Text style={styles.name}>Hello, {authenticatedUser?.name}!</Text>
       </View>
-      <View style={styles.notification}>
-        <Text style={styles.notificationText}>
-          🎉 You checked in at 08:22 04-05-2021
-        </Text>
-      </View>
+      {work && (
+        <View style={styles.notification}>
+          <Text style={styles.notificationText}>
+            🎉 You checked in at{" "}
+            {new Date(work.createdAt).toLocaleString("vi-VN")}
+          </Text>
+        </View>
+      )}
       <View style={styles.boxContainer}>
         <ButtonWithIcon
           onPress={() =>
@@ -35,12 +39,20 @@ export default function UI({
           value={"Your Workdays"}
         />
         <ButtonWithIcon
-          onPress={(e) => navigation.navigate(screens.SALARY)}
+          onPress={(e) =>
+            navigation.navigate(screens.SALARY, {
+              screen: screens.SALARY,
+            })
+          }
           source={require("../../assets/icons/salary.png")}
           value={"Your Salary"}
         />
         <ButtonWithIcon
-          onPress={() => navigation.navigate(screens.COMPLAINT)}
+          onPress={() =>
+            navigation.navigate(screens.COMPLAINT, {
+              screen: screens.COMPLAINT,
+            })
+          }
           source={require("../../assets/icons/complaint.png")}
           value={"New Complaint"}
         />
