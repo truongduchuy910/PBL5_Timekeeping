@@ -38,21 +38,21 @@ Timekeeping native app phục vụ cho nhân viên. Giúp nhân viên kiểm tra
 
 **Overview**
 
-|      | Description                                 | status |                                                                              note |
-| :--- | ------------------------------------------- | ------ | --------------------------------------------------------------------------------: |
-| 1    | UI/UX design                                | ✅     |                                                                                   |
-| 2    | Di chuyển giữa các màn hình không qu 3 chạm | ✅     |                                                                                   |
-| 3    | Ứng dụng cần có API hoặc Firebase           | ✅     |                                                          TFace Micro, Timekeeping |
-| 4    | Có sử dụng cơ chế cache dữ liệu             | ✅     |                                                                                   |
-| 5    | Kiến trúc giải pháp thiết kế hợp lý         | ❔     |                                                                                   |
-| 7    | Sigma/Adobe XD/Photoshop                    | ✅     |                                                                  [timkeeping_xd.xd](https://github.com/truongduchuy910/timekeeping/blob/main/timkeeping_xd.xd) |
-| 8    | Trello/Jira/...                             | ❌     |                                                                                   |
-| 9    | Github/Gitlab/Bitbucket                     | ✅     | [timekeeping](https://github.com/truongduchuy910/timekeeping/blob/main/README.md) |
-| 10   | Báo cáo dự án và văn phong đảm bảo yêu cầu  | ❔     |                                                                                   |
+|      | Description                                  | status |                                                                              note |
+| :--- | -------------------------------------------- | ------ | --------------------------------------------------------------------------------: |
+| 1    | UX/UI design                                 | ✅     |                                                                                   |
+| 2    | Di chuyển giữa các màn hình không quá 3 chạm | ✅     |                                                                                   |
+| 3    | Ứng dụng cần có API hoặc Firebase            | ✅     |                                                          TFace Micro, Timekeeping |
+| 4    | Có sử dụng cơ chế cache dữ liệu              | ✅     |                                                                                   |
+| 5    | Kiến trúc giải pháp thiết kế hợp lý          | ❔     |                                                                                   |
+| 7    | Figma/Adobe XD/Photoshop                     | ✅     |                                                                  [timkeeping_xd.xd](https://github.com/truongduchuy910/timekeeping/blob/main/timkeeping_xd.xd) |
+| 8    | Trello/Jira/...                              | ❌     |                                                                                   |
+| 9    | Github/Gitlab/Bitbucket                      | ✅     | [timekeeping](https://github.com/truongduchuy910/timekeeping/blob/main/README.md) |
+| 10   | Báo cáo dự án và văn phong đảm bảo yêu cầu   | ❔     |                                                                                   |
 
 **Details**
 
-##### UI/UX design
+##### UX/UI design
 
 Dựa trên Adobe XD, timekeeping phát triển các components. Sử dụng css inline và không phụ thuộc UI library. Có phụ sử dụng thư viện date time picker.
 
@@ -104,7 +104,7 @@ components
     
 ```
 
-##### Sigma/Adobe XD/Photoshop
+##### Figma/Adobe XD/Photoshop
 
 Dựa trên wireframe, timekeeping sử dụng Adobe XD để thiết kế giao diện người dùng.
 
