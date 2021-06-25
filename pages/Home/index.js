@@ -32,12 +32,6 @@ export default function HomeScreen({ navigation, route }) {
   const [onUserSignOutMutation, resultSignOutMutation] =
     useMutation(UserSignOutMutation);
   const { loading, error, data } = useQuery(AuthenticatedUserQuery);
-  if (loading || error) return <Splash />;
-  const {
-    authenticatedUser,
-    allWorks: [work],
-  } = data;
-
   const pressSignOut = () => {
     if (!resultSignOutMutation.loading)
       onUserSignOutMutation()
@@ -54,8 +48,14 @@ export default function HomeScreen({ navigation, route }) {
     .then((screen) =>
       screen ? navigation.navigate(screen, { screen: false }) : null
     )
-    .catch(() => {})
+    .catch((error) => console.error(error))
     .finally(() => {});
+  if (loading) return <Splash />;
+  if (error) navigation.navigate(screens.SIGNIN);
+  const {
+    authenticatedUser,
+    allWorks: [work],
+  } = data;
   return (
     <UI
       authenticatedUser={authenticatedUser}

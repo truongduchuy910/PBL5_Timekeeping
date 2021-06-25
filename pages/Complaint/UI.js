@@ -50,7 +50,7 @@ export default function ComplaintScreen({ navigation, clickCreate, result }) {
           }}
           firstDay={1}
         />
-        <View>
+        {/* <View>
           <Text
             style={{
               marginTop: 12,
@@ -65,7 +65,7 @@ export default function ComplaintScreen({ navigation, clickCreate, result }) {
             If you are having any problems with Timekeeper system, please fill
             in this form and we will solve your issue immediately.
           </Text>
-        </View>
+        </View> */}
         <View
           style={{
             borderWidth: 1,

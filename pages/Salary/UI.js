@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Text, View, Picker } from "react-native";
 import Container from "../../components/Container";
 import { styles } from "../../styles/styles";
+import NumberFormat from "react-number-format";
+
 export default function SalaryScreen({
   navigation,
   onChange,
@@ -23,8 +25,9 @@ export default function SalaryScreen({
         </View>
         <View style={styles.salaryLastLine}>
           <Text style={styles.salaryText}>Your salary: </Text>
+
           <Text style={styles.salaryNumber}>
-            ${Intl.NumberFormat().format(salary)} đ{" "}
+            {salary.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")}
           </Text>
         </View>
       </View>

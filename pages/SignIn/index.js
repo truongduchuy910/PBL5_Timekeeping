@@ -21,7 +21,7 @@ export const UserSignInMutation = gql`
 `;
 export default function SignInScreen({ navigation }) {
   const client = useApolloClient();
-
+  const [errors, setErrors] = useState([]);
   const [onUserSignInMutation, result] = useMutation(UserSignInMutation);
   const { loading, error, data, refetch } = useQuery(AuthenticatedUserQuery);
   const onSignIn = ({ username, password }) => {
@@ -36,15 +36,17 @@ export default function SignInScreen({ navigation }) {
           if (authenticate?.item) {
             author(authenticate);
             AsyncStorage.setItem("@author", JSON.stringify(authenticate))
-              .catch(() => {})
+              .catch((error) => {
+                setErrors((errors) => [...errors, error]);
+              })
               .finally(refetch);
           }
           client.clearStore();
-          // navigation.navigate(screens.SIGNIN);
-
           navigation.navigate(screens.HOME);
         })
-        .catch((e) => {})
+        .catch((error) => {
+          setErrors((errors) => [...errors, error]);
+        })
         .finally(() => {
           client.resetStore();
         });
@@ -54,7 +56,14 @@ export default function SignInScreen({ navigation }) {
     navigation.navigate(screens.AUTHOR);
   };
 
-  if (loading) return <Splash />;
   if (data?.authenticatedUser) navigation.navigate(screens.HOME);
-  return <UI onSignIn={onSignIn} result={result} pressAuthor={pressAuthor} />;
+  if (loading) return <Splash />;
+  return (
+    <UI
+      onSignIn={onSignIn}
+      result={result}
+      pressAuthor={pressAuthor}
+      errors={[...errors, error]}
+    />
+  );
 }

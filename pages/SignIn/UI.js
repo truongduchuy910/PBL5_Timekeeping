@@ -4,19 +4,19 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View
+  View,
 } from "react-native";
 import { styles } from "../../styles/styles";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Button from "../../components/Button";
 import AnimationEmoji from "../../components/Animation/Emoji";
-export default function UI({ onSignIn, result, pressAuthor }) {
+export default function UI({ onSignIn, result, pressAuthor, errors }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const clickSignIn = async (e) => {
-    // same with above
-    const result = await onSignIn({ username, password });
-  };
+  const clickSignIn = useMemo(
+    () => (e) => onSignIn({ username, password }),
+    [username, password]
+  );
   return (
     <TouchableWithoutFeedback>
       <View style={styles.HomeContainer}>
@@ -48,46 +48,34 @@ export default function UI({ onSignIn, result, pressAuthor }) {
             paddingVertical: "10%",
           }}
         >
-          {/* <form
-            noValidate
-            onSubmit={(e) => {
-              clickSignIn(e);
-              e.preventDefault();
-            }}
-          > */}
-            <TextInput
-              style={styles.textInput}
-              placeholder="Username"
-              onChangeText={setUsername}
-              keyboardType={"numeric"}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Password"
-              onChangeText={setPassword}
-              secureTextEntry
-              keyboardType={"numeric"}
-            />
-            <Button
-              loading={result.loading}
-              onPress={clickSignIn}
-              icon={"🚀"}
-              value={"Sign In"}
-              type="submit"
-            />
-            {/* <Button
-              loading={result?.loading}
-              onPress={clickSignIn}
-              icon={"🚀"}
-              value={"Sign In"}
-              type="submit"
-            /> */}
-          {/* </form> */}
-          <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
-          {/* {result.error && (
-            <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
-          )} */}
-          {/* <TouchableOpacity
+          <TextInput
+            style={styles.textInput}
+            placeholder="Username"
+            onChangeText={setUsername}
+            keyboardType={"numeric"}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder="Password"
+            onChangeText={setPassword}
+            secureTextEntry
+            keyboardType={"numeric"}
+          />
+
+          <Button
+            loading={result?.loading}
+            onPress={clickSignIn}
+            icon={"🚀"}
+            value={"Sign In"}
+            type="submit"
+            css={{ marginBotton: 13 }}
+          />
+          {errors &&
+            errors.length &&
+            errors.map((error, index) => {
+              return <Text key={index}>{error?.toString()}</Text>;
+            })}
+          <TouchableOpacity
             style={{
               color: "#aaa",
               textAlign: "center",
@@ -99,7 +87,7 @@ export default function UI({ onSignIn, result, pressAuthor }) {
               emojis={["🤦‍♂️ 🙆‍♂️", "🙆‍♂️ 🙋‍♂️", "🙋‍♂️ 🤦‍♂️", "🤷‍♂️ 🤷‍♂️"]}
               as={Text}
             />
-          </TouchableOpacity> */}
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableWithoutFeedback>

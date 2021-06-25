@@ -11,11 +11,12 @@ export default function Splash({ error }) {
     client.resetStore();
     client.restore();
     AsyncStorage.removeItem("@author")
-      .catch(() => {})
+      .catch((e) => {
+        console.error(e);
+      })
       .finally(() => {
         author({});
       });
-    
   } else {
   }
   return (
