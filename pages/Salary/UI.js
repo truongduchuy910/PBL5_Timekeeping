@@ -1,19 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import Container from "../../components/Container";
 import { styles } from "../../styles/styles";
-import NumberFormat from "react-number-format";
+import { useState } from "react/cjs/react.development";
 
-export default function SalaryScreen({
-  navigation,
-  onChange,
-  salary,
-  working,
-  late,
-  diff,
-}) {
+const month = new Date().getMonth() + 1;
+export default function SalaryScreen({ onChange, salary, working, late }) {
+  const [selectedLanguage, setSelectedLanguage] = useState(month.toString());
+
   return (
     <Container>
       <View style={styles.salaryBox}>
@@ -33,33 +29,34 @@ export default function SalaryScreen({
           </Text>
         </View>
       </View>
-      <View style={{ width: "100%" }}>
-        <Picker
-          onValueChange={(itemValue, itemIndex) => onChange(itemValue)}
-          itemStyle={styles.pickerText}
-          style={{
-            padding: 8,
-            borderRadius: 5,
-            backgroundColor: "white",
-            borderColor: "rgb(36, 196, 138)",
-            fontWeight: "bold",
-            color: "rgb(36, 196, 138)",
-          }}
-        >
-          <Picker.Item label="January" value="01" />
-          <Picker.Item label="February" value="02" />
-          <Picker.Item label="March" value="03" />
-          <Picker.Item label="April" value="04" />
-          <Picker.Item label="May" value="05" />
-          <Picker.Item label="June" value="06" />
-          <Picker.Item label="July" value="07" />
-          <Picker.Item label="August" value="08" />
-          <Picker.Item label="September" value="09" />
-          <Picker.Item label="October" value="10" />
-          <Picker.Item label="November" value="11" />
-          <Picker.Item label="December" value="12" />
-        </Picker>
-      </View>
+      <Picker
+        selectedValue={selectedLanguage}
+        onValueChange={(itemValue, itemIndex) => {
+          setSelectedLanguage(itemValue);
+          onChange(itemValue);
+        }}
+        style={{
+          padding: 12,
+          borderRadius: 5,
+          backgroundColor: "white",
+          borderColor: "rgb(36, 196, 138)",
+          fontWeight: "bold",
+          color: "rgb(36, 196, 138)",
+        }}
+      >
+        <Picker.Item label="January" value="1" />
+        <Picker.Item label="February" value="2" />
+        <Picker.Item label="March" value="3" />
+        <Picker.Item label="April" value="4" />
+        <Picker.Item label="May" value="5" />
+        <Picker.Item label="June" value="6" />
+        <Picker.Item label="July" value="7" />
+        <Picker.Item label="August" value="08" />
+        <Picker.Item label="September" value="09" />
+        <Picker.Item label="October" value="10" />
+        <Picker.Item label="November" value="11" />
+        <Picker.Item label="December" value="12" />
+      </Picker>
     </Container>
   );
 }

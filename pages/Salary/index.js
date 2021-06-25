@@ -3,6 +3,7 @@ import UI from "./UI";
 import { gql, useQuery } from "@apollo/client";
 import { useState } from "react/cjs/react.development";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Splash from "../Splash";
 
 export const WORKS_QUERY = gql`
   query ($where: WorkWhereInput) {
@@ -60,6 +61,7 @@ export default function SalaryScreen({
     if (!work.onTime) late++;
     salary += work.price * (work.onTime ? 1 : 0.99);
   });
+  if (loading || error) return <Splash error={error} />;
   return (
     <UI
       onChange={onChange}

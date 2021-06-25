@@ -11,9 +11,7 @@ export default function Splash({ error }) {
     client.resetStore();
     client.restore();
     AsyncStorage.removeItem("@author")
-      .catch((e) => {
-        console.error(e);
-      })
+      .catch((error) => {})
       .finally(() => {
         author({});
       });
