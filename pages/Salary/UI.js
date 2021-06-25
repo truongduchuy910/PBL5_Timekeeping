@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Text, View, Picker } from "react-native";
+import { Text, View } from "react-native";
+import { Picker } from "@react-native-picker/picker";
+
 import Container from "../../components/Container";
 import { styles } from "../../styles/styles";
 import NumberFormat from "react-number-format";
