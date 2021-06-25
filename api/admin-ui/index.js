@@ -25,4 +25,12 @@ export default {
       </Fragment>
     );
   },
+  pages: (props) => {
+    return [
+      { listKey: "Report", label: "# Report" },
+      { listKey: "Shift", label: "# Shift" },
+      { listKey: "User", label: "# User" },
+      // { listKey: "Work", label: "# Work" },
+    ];
+  },
 };
