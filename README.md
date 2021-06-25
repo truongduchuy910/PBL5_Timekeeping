@@ -58,11 +58,17 @@ Dựa trên Adobe XD, timekeeping phát triển các components. Sử dụng css
 
 ##### Di chuyển giữa các màn hình không quá 3 chạm
 
-Vì số trang không quá nhiều, nên khi thiết kế wireframe. Timekeeping đã lược bỏ menu điều hướng dọc. Thay vào đó khi di chuyển sang trang khác. Người dùng nhấn trở lại và chọn trang cần đến.
+Vì số trang không quá nhiều, nên khi thiết kế wireframe. Timekeeping đã lược bỏ menu điều hướng dọc. Thay vào đó khi di chuyển sang trang khác, người dùng nhấn trở lại và chọn trang cần đến.
 
 ##### Ứng dụng cần có API hoặc Firebase
 
 Timekeeping sử dụng GraphQL API tự phát triển tại https://timekeeping.itoa.vn/admin/api
+
+Source
+
+```
+./api
+```
 
 ##### Có sử dụng cơ chế cache dữ liệu   
 
@@ -70,13 +76,42 @@ Tham khảo: [InMemoryCache](https://www.apollographql.com/docs/react/api/cache/
 
 Cơ chế cache dựa trên truy vấn và tham số. Nếu cùng một truy vấn, cùng tham số đó gọi lần thứ 2 trở đi sẽ được trả về kết quả trong cache.
 
-Cache s
+Cache sẽ được xóa đi sau các hành động: Đăng kí, đăng nhập, đăng xuất.
 
-##### Kiến trúc giải pháp thiết kế hợp lý   
+##### Kiến trúc giải pháp thiết kế hợp lý
+
+Ngoại trừ các điều hướng, mọi thao tác liên quan đến dữ liệu đều được thực hiện thông qua API.
+
+Vì đặc tính của [Apollo Client](https://www.apollographql.com/docs/react/data/queries/) có thể viết truy vấn trong từng component độc lập, các components được chia nhỏ dựa trên dữ liệu để có tính tái sử dụng cao.
+
+Một tổ component bao gồm component để gọi API (tạm gọi là route) và các component hiển thị dữ liệu đó (tạm gọi là UI). Lúc này một kiểu dữ liệu có nhiều các trình bày trên giao diện người dùng, ta chỉ cần phát triển route và các UIs cần thiết.
+
+Ngoài ra, tổ component có thể xây dựng cho tính năng thêm, sửa, xóa. Lúc này route sẽ cung cấp cho UI các hàm thêm, sửa, xóa.
+
+Ví dụ
+```
+components
+  User
+    item
+      index.js
+      profile.ui.js
+    list
+      index.js
+      friend.ui.js
+    create
+      index.js
+      signin.ui.js
+    
+```
+
 ##### Sigma/Adobe XD/Photoshop
-##### Trello/Jira/...   
+
+Dựa trên wireframe, timekeeping sử dụng Adobe XD để thiết kế giao diện người dùng.
+
+
 ##### Github/Gitlab/Bitbucket
-##### Báo cáo dự án và văn phong đảm bảo yêu cầu 
+
+Timekeeping sử dụng github để quản lí phiên bản.
 
 ### 4.2 TFace Micro Server
 
