@@ -43,12 +43,10 @@ export default function TimekeeperScreen({
         ],
       };
     allWorks.map((work) => {
-      const date = new Date(work.createdAt)
-        .toLocaleDateString("vi-VN")
-        .split("/")
-        .map((n) => (n.length > 1 ? n : "0" + n))
-        .reverse()
-        .join("-");
+      const _date = new Date(work.createdAt);
+      const date = `${prefix(_date.getFullYear())}-${prefix(
+        _date.getMonth() + 1
+      )}-${prefix(_date.getDate())}`;
       const dot = {
         color: "blue",
       };
@@ -57,6 +55,7 @@ export default function TimekeeperScreen({
     });
     return worked;
   }, [allWorks]);
+  console.log(worked);
   return (
     <Container>
       <Calendar
@@ -107,4 +106,7 @@ export default function TimekeeperScreen({
       })}
     </Container>
   );
+}
+function prefix(a) {
+  return a > 9 ? a : "0" + a;
 }

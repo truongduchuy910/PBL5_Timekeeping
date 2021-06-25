@@ -14,7 +14,9 @@ export default function UI({ onSignIn, result, pressAuthor, errors }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const clickSignIn = useMemo(
-    () => (e) => onSignIn({ username, password }),
+    () => (e) => {
+      onSignIn({ username, password });
+    },
     [username, password]
   );
   return (
@@ -52,14 +54,12 @@ export default function UI({ onSignIn, result, pressAuthor, errors }) {
             style={styles.textInput}
             placeholder="Username"
             onChangeText={setUsername}
-            keyboardType={"numeric"}
           />
           <TextInput
             style={styles.textInput}
             placeholder="Password"
             onChangeText={setPassword}
             secureTextEntry
-            keyboardType={"numeric"}
           />
 
           <Button
@@ -70,11 +70,9 @@ export default function UI({ onSignIn, result, pressAuthor, errors }) {
             type="submit"
             css={{ marginBotton: 13 }}
           />
-          {errors &&
-            errors.length &&
-            errors.map((error, index) => {
-              return <Text key={index}>{error?.toString()}</Text>;
-            })}
+          {errors.map((error, index) => {
+            return <Text key={index}>{error?.toString()}</Text>;
+          })}
           <TouchableOpacity
             style={{
               color: "#aaa",

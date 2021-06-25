@@ -1,15 +1,16 @@
 import "react-native-gesture-handler";
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs();
 import { AppRegistry } from "react-native";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   HttpLink,
-  makeVar,
 } from "@apollo/client";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { createContext, useEffect, useReducer, useMemo } from "react";
+import React from "react";
 import { setContext } from "@apollo/client/link/context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 /**
