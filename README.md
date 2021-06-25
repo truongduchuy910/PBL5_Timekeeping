@@ -45,7 +45,7 @@ Timekeeping native app phục vụ cho nhân viên. Giúp nhân viên kiểm tra
 | 3    | Ứng dụng cần có API hoặc Firebase           | ✅     |                                                          TFace Micro, Timekeeping |
 | 4    | Có sử dụng cơ chế cache dữ liệu             | ✅     |                                                                                   |
 | 5    | Kiến trúc giải pháp thiết kế hợp lý         | ❔     |                                                                                   |
-| 7    | Sigma/Adobe XD/Photoshop                    | ✅     |                                                                  timkeeping_xd.xd |
+| 7    | Sigma/Adobe XD/Photoshop                    | ✅     |                                                                  [timkeeping_xd.xd](https://github.com/truongduchuy910/timekeeping/blob/main/timkeeping_xd.xd) |
 | 8    | Trello/Jira/...                             | ❌     |                                                                                   |
 | 9    | Github/Gitlab/Bitbucket                     | ✅     | [timekeeping](https://github.com/truongduchuy910/timekeeping/blob/main/README.md) |
 | 10   | Báo cáo dự án và văn phong đảm bảo yêu cầu  | ❔     |                                                                                   |
