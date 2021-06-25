@@ -36,19 +36,19 @@ Timekeeping native app phục vụ cho nhân viên. Giúp nhân viên kiểm tra
 - Nguyễn Kim Huy: Xây dựng wirefame, thiết kế giao diện. Phát triển, liên kết các pages và components.
 - Trần Ngọc Huy: Lựa chọn công nghệ và thiết kế cấu trúc dự án. Sử dụng API và các pages, components để xử lí logic.
 
-**Details**
+**Overview**
 
-| Câu  |                   Nội dung                   |    Điểm     | Chi tiết |
-| :--- | :------------------------------------------: | :---------: | -------: |
-| 1    |       Giao điện người dung thân thiện        | Here's this |          |
-| 2    | Di chuyển giữa các màn hình không qu3 chạm 1 |             |          |
-| 3    |      Ứng dụng cần có API hoặc Firebase       |             |          |
-| 4    |      Có sử dụng cơ chế cache dữ liệu 1       |             |          |
-| 5    |    Kiến trúc giải pháp thiết kế hợp lý 1     |             |          |
-| 7    |           Sigma/Adobe XD/Photoshop           |             |          |
-| 8    |               Trello/Jira/...                |             |          |
-| 9    |           Github/Gitlab/Bitbucket            |             |          |
-| 10   |  báo cáo dự án và văn phong đảm bảo yêu cầu  |             |          |
+|      | Description                                 | status |                                                                              note |
+| :--- | ------------------------------------------- | ------ | --------------------------------------------------------------------------------: |
+| 1    | UI/UX design                                | ✅      |                                                                                   |
+| 2    | Di chuyển giữa các màn hình không qu 3 chạm | ✅      |                                                                                   |
+| 3    | Ứng dụng cần có API hoặc Firebase           | ✅      |                                                          TFace Micro, Timekeeping |
+| 4    | Có sử dụng cơ chế cache dữ liệu             | ✅      |                                                                                   |
+| 5    | Kiến trúc giải pháp thiết kế hợp lý         | ❔      |                                                                                   |
+| 7    | Sigma/Adobe XD/Photoshop                    | ✅      |                                                                  timkeeping_xd.xd |
+| 8    | Trello/Jira/...                             | ❌      |                                                                                   |
+| 9    | Github/Gitlab/Bitbucket                     | ✅      | [timekeeping](https://github.com/truongduchuy910/timekeeping/blob/main/README.md) |
+| 10   | báo cáo dự án và văn phong đảm bảo yêu cầu  | ❔      |                                                                                   |
 
 1
 
