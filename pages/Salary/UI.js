@@ -32,8 +32,9 @@ export default function SalaryScreen({ onChange, salary, working, late }) {
       <Picker
         selectedValue={selectedLanguage}
         onValueChange={(itemValue, itemIndex) => {
-          setSelectedLanguage(itemValue);
+          console.log(itemValue, itemIndex);
           onChange(itemValue);
+          setSelectedLanguage(itemValue);
         }}
         style={{
           padding: 12,
@@ -44,13 +45,13 @@ export default function SalaryScreen({ onChange, salary, working, late }) {
           color: "rgb(36, 196, 138)",
         }}
       >
-        <Picker.Item label="January" value="1" />
-        <Picker.Item label="February" value="2" />
-        <Picker.Item label="March" value="3" />
-        <Picker.Item label="April" value="4" />
-        <Picker.Item label="May" value="5" />
-        <Picker.Item label="June" value="6" />
-        <Picker.Item label="July" value="7" />
+        <Picker.Item label="January" value="01" />
+        <Picker.Item label="February" value="02" />
+        <Picker.Item label="March" value="03" />
+        <Picker.Item label="April" value="04" />
+        <Picker.Item label="May" value="05" />
+        <Picker.Item label="June" value="06" />
+        <Picker.Item label="July" value="07" />
         <Picker.Item label="August" value="08" />
         <Picker.Item label="September" value="09" />
         <Picker.Item label="October" value="10" />
