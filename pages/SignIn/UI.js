@@ -4,7 +4,7 @@ import {
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  View,
+  View
 } from "react-native";
 import { styles } from "../../styles/styles";
 import React, { useState } from "react";
@@ -13,7 +13,7 @@ import AnimationEmoji from "../../components/Animation/Emoji";
 export default function UI({ onSignIn, result, pressAuthor }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const clickSignIn = async () => {
+  const clickSignIn = async (e) => {
     // same with above
     const result = await onSignIn({ username, password });
   };
@@ -48,13 +48,13 @@ export default function UI({ onSignIn, result, pressAuthor }) {
             paddingVertical: "10%",
           }}
         >
-          <form
+          {/* <form
             noValidate
             onSubmit={(e) => {
-              clickSignIn();
+              clickSignIn(e);
               e.preventDefault();
             }}
-          >
+          > */}
             <TextInput
               style={styles.textInput}
               placeholder="Username"
@@ -75,9 +75,19 @@ export default function UI({ onSignIn, result, pressAuthor }) {
               value={"Sign In"}
               type="submit"
             />
-          </form>
+            {/* <Button
+              loading={result?.loading}
+              onPress={clickSignIn}
+              icon={"🚀"}
+              value={"Sign In"}
+              type="submit"
+            /> */}
+          {/* </form> */}
           <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
-          <TouchableOpacity
+          {/* {result.error && (
+            <Text style={{ marginTop: 13 }}>{result.error?.toString()}</Text>
+          )} */}
+          {/* <TouchableOpacity
             style={{
               color: "#aaa",
               textAlign: "center",
@@ -89,7 +99,7 @@ export default function UI({ onSignIn, result, pressAuthor }) {
               emojis={["🤦‍♂️ 🙆‍♂️", "🙆‍♂️ 🙋‍♂️", "🙋‍♂️ 🤦‍♂️", "🤷‍♂️ 🤷‍♂️"]}
               as={Text}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </TouchableWithoutFeedback>
