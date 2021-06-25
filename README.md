@@ -27,6 +27,39 @@ As an asynchronous event-driven JavaScript runtime, Node.js is designed to build
 
 #### 4.1.1 Timekeeping Native App
 
+**Description**
+
+Timekeeping native app phục vụ cho nhân viên. Giúp nhân viên kiểm tra công và lương của mình.
+
+**Contributors**
+
+- Nguyễn Kim Huy: Xây dựng wirefame, thiết kế giao diện. Phát triển, liên kết các pages và components.
+- Trần Ngọc Huy: Lựa chọn công nghệ và thiết kế cấu trúc dự án. Sử dụng API và các pages, components để xử lí logic.
+
+**Details**
+
+Câu Nội dung Điểm Ghi chú
+1 Giao điện người dung thân thiện 1
+2 Di chuyển giữa các màn hình không quá 3 chạm 1
+3 Ứng dụng cần có API hoặc Firebase 1
+4 Có sử dụng cơ chế cache dữ liệu 1
+5 Kiến trúc giải pháp thiết kế hợp lý 1
+7
+Thiết kế giao diện ứng dụng di động sử dụng:
+Sigma/Adobe XD/Photoshop
+
+1
+8 Sử dụng hợp lý ứng dụng quản lý dự án: Trello/Jira/... 1
+9
+Biết cách sử dụng ứng dụng quản lý source code:
+Github/Gitlab/Bitbucket
+
+1
+10 Hình thức trình bày báo cáo dự án và văn phong đảm
+bảo yêu cầu
+
+1
+
 ### 4.2 TFace Micro Server
 
 ### 4.3 Rasberry Pi 3 Device
