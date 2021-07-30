@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Fragment, useEffect } from "react";
-import { CreateItem } from "@keystonejs/app-admin-ui/components";
+import { CreateItem } from "@itoa/app-admin-ui/components";
 import Logo from "./logo.svg";
 export default {
   listHeaderActions: () => (

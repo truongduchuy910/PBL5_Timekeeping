@@ -56,11 +56,10 @@ export default function UI({ onSignIn, result, pressAuthor, errors }) {
             onChangeText={setUsername}
           />
           <TextInput
-            keyboardType="visible-password"
             style={styles.textInput}
             placeholder="Password"
             onChangeText={setPassword}
-            secureTextEntry
+            secureTextEntry={true}
           />
 
           <Button

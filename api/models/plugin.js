@@ -1,4 +1,4 @@
-const { Relationship, Text } = require("@keystonejs/fields");
+const { Relationship, Text } = require("@itoa/fields");
 const { gql } = require("@apollo/client/core");
 /**
  *

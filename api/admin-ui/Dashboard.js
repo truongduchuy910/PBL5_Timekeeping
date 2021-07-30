@@ -1,8 +1,8 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import React, { useState, Fragment } from "react";
 import { PageTitle } from "../node_modules/@arch-ui/typography";
-import DocTitle from "../node_modules/@keystonejs/app-admin-ui/client/components/DocTitle";
-import { HeaderInset } from "../node_modules/@keystonejs/app-admin-ui/client/pages/Home/components";
+import DocTitle from "../node_modules/@itoa/app-admin-ui/client/components/DocTitle";
+import { HeaderInset } from "../node_modules/@itoa/app-admin-ui/client/pages/Home/components";
 import { Container, Grid, Cell } from "@arch-ui/layout";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FacebookProvider, CustomChat } from "react-facebook";

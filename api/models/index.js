@@ -7,10 +7,10 @@ var report = require("./Report");
 /**
  *
  */
-const { byTracking, atTracking } = require("@keystonejs/list-plugins");
+const { byTracking, atTracking } = require("@itoa/list-plugins");
 
-const { Keystone } = require("@keystonejs/keystone");
-const { PasswordAuthStrategy } = require("@keystonejs/auth-password");
+const { Keystone } = require("@itoa/keystone");
+const { PasswordAuthStrategy } = require("@itoa/auth-password");
 const Extension = require("../Extension");
 
 /**

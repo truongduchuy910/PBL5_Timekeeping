@@ -1,4 +1,4 @@
-const { Keystone } = require("@keystonejs/keystone");
+const { Keystone } = require("@itoa/keystone");
 
 class Extension {
   keystone;

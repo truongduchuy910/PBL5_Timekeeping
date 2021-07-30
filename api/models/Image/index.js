@@ -1,4 +1,4 @@
-let { File, Relationship, Checkbox, Text } = require("@keystonejs/fields");
+let { File, Relationship, Checkbox, Text } = require("@itoa/fields");
 let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem } = require("../access");
 const { gql } = require("@apollo/client");
