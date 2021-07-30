@@ -1,4 +1,4 @@
-let { File, Relationship, Checkbox } = require("@keystonejs/fields");
+let { File, Relationship, Checkbox } = require("@itoa/fields");
 let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem } = require("../access");
 const { default: gql } = require("graphql-tag");

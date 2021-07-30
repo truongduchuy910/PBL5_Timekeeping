@@ -1,4 +1,4 @@
-const { Relationship, Checkbox, Integer, Text } = require("@keystonejs/fields");
+const { Relationship, Checkbox, Integer, Text } = require("@itoa/fields");
 let { sellerItem } = require("../access");
 const format = new Intl.NumberFormat().format;
 

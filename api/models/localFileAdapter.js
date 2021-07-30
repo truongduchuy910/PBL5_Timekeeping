@@ -1,4 +1,4 @@
-const { LocalFileAdapter } = require("@keystonejs/file-adapters");
+const { LocalFileAdapter } = require("@itoa/file-adapters");
 module.exports = {
   imageAdapter: new LocalFileAdapter({
     src: "./public/upload/img",

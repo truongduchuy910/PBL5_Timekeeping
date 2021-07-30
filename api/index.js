@@ -1,11 +1,11 @@
 require("dotenv").config();
-const { Keystone } = require("@keystonejs/keystone");
-const { GraphQLApp } = require("@keystonejs/app-graphql");
-const { AdminUIApp } = require("@keystonejs/app-admin-ui");
+const { Keystone } = require("@itoa/keystone");
+const { GraphQLApp } = require("@itoa/app-graphql");
+const { AdminUIApp } = require("@itoa/app-admin-ui");
 const { Packages } = require("./packages");
 const { Models } = require("./models");
 const initialiseData = require("./initial-data");
-const { MongooseAdapter } = require("@keystonejs/adapter-mongoose");
+const { MongooseAdapter } = require("@itoa/adapter-mongoose");
 var keystone = new Keystone({
   adapter: new MongooseAdapter({
     mongoUri: "mongodb://timekeeping:timekeeping@db.itoa.vn:27017/timekeeping",

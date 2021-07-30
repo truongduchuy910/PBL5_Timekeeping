@@ -1,5 +1,5 @@
 var axios = require("axios").default;
-const { Keystone } = require("@keystonejs/keystone");
+const { Keystone } = require("@itoa/keystone");
 const { GraphQLClient, gql } = require("graphql-request");
 const Extension = require("../../Extension");
 const express = require("express");

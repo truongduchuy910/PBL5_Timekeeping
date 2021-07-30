@@ -1,4 +1,4 @@
-const { Relationship, DateTime, Integer, Text } = require("@keystonejs/fields");
+const { Relationship, DateTime, Integer, Text } = require("@itoa/fields");
 let { publicItem, sellerItem } = require("../access");
 const format = new Intl.NumberFormat().format;
 
