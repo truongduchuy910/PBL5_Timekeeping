@@ -82,10 +82,10 @@ export default function UI({ onSignIn, result, pressAuthor, errors }) {
             }}
             onPress={pressAuthor}
           >
-            <AnimationEmoji
+            {/* <AnimationEmoji
               emojis={["🤦‍♂️ 🙆‍♂️", "🙆‍♂️ 🙋‍♂️", "🙋‍♂️ 🤦‍♂️", "🤷‍♂️ 🤷‍♂️"]}
               as={Text}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
       </View>

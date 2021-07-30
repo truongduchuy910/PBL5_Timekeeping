@@ -9,7 +9,7 @@ import { useState } from "react/cjs/react.development";
 const month = new Date().getMonth() + 1;
 export default function SalaryScreen({ onChange, salary, working, late }) {
   const [selectedLanguage, setSelectedLanguage] = useState(month.toString());
-
+  console.log(onChange);
   return (
     <Container>
       <View style={styles.salaryBox}>
