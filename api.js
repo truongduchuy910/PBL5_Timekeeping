@@ -1,9 +1,6 @@
 const fetch = require("node-fetch");
 class TFace {
-  url =
-    this.mode === false
-      ? `http://d3f205c6b472.ngrok.io`
-      : `https://tfacev1project.herokuapp.com`;
+  url = `http://b88dbc29ad5c.ngrok.io`;
 
   option = {
     headers: {
@@ -22,8 +19,12 @@ class TFace {
    * @returns
    */
   async uploadByUrls(urls, id) {
+    var status;
+    do {
+      status = await this.isAvailable();
+      console.log("status", status);
+    } while (!status);
     const url = `${this.url}/uploadByUrls`;
-    console.log(url);
     const body = JSON.stringify({
       url_list: urls,
       txtusername: id,
@@ -35,15 +36,33 @@ class TFace {
     if (response.status === 200) {
       const data = await response.json();
       return data;
-    } else console.error(response.status, response.statusText);
+    } else {
+      console.error(response.status, response.statusText);
+    }
+  }
+  async train() {
+    const url = `${this.url}/trainning`;
+    const response = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      method: "GET",
+      redirect: "follow",
+    });
+    return response.status === 200;
   }
   /**
    * @param {Array.<String>} urls
    * @returns {name_list_rp: Array.<String>}
    */
   async getIdByUrls(urls) {
-    const url = `${this.url}/identifiedStrListTest`;
-    console.log(url);
+    var status;
+    do {
+      status = await this.isAvailable();
+      console.log("status", status);
+    } while (!status);
+    const url = `${this.url}/identifiedStrList`;
     const body = JSON.stringify({
       url_list: urls,
     });
@@ -54,19 +73,19 @@ class TFace {
     if (response.status === 200) {
       const data = await response.json();
       return data;
-    } else console.error(response.statusText);
+    } else console.error(response.status, response.statusText);
   }
-  /**
-   * @param {String} id
-   * @returns
-   */
-  async deleteById(id) {
-    const url = `${this.url}/deleteById${this.mode}`;
-    console.log(url);
+  async getIdByUrl(url) {
+    var status;
+    do {
+      status = await this.isAvailable();
+      console.log("status", status);
+    } while (!status);
+    const _url = `${this.url}/identifiedStr`;
     const body = JSON.stringify({
-      id,
+      url: url,
     });
-    const response = await fetch(url, {
+    const response = await fetch(_url, {
       ...this.option,
       body,
     });
@@ -75,39 +94,252 @@ class TFace {
       return data;
     } else console.error(response.statusText);
   }
+  async isAvailable() {
+    const _url = `${this.url}/checkAvailable`;
+
+    const response = await fetch(_url, {
+      headers: {
+        Accept: "application/json",
+        "Content-type": "application/json",
+      },
+      method: "GET",
+      redirect: "follow",
+    });
+
+    return response.status === 200;
+  }
+  /**
+   * @param {String} id
+   * @returns
+   */
+  async deleteById(id) {
+    const url = `${this.url}/deleteById`;
+    const body = JSON.stringify({
+      id,
+    });
+    const response = await fetch(url, {
+      ...this.option,
+      body,
+    });
+    return response.status === 200;
+  }
 }
 (async () => {
   const tface = new TFace();
-  // const uploadByUrls = await tface.uploadByUrls(
-  //   [
-  //     "https://scontent-hkg4-2.xx.fbcdn.net/v/t1.6435-9/120660089_393393651679331_1736612289947580072_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=WdxI6LNNORYAX_aO8hA&_nc_ht=scontent-hkg4-2.xx&oh=00ea2a8a1b4aec1845fa6f40af74b205&oe=60DDA1CF",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/97809765_301050514246979_4483881806176714752_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=70ysF2VTy-IAX-NO6AM&_nc_ht=scontent.fdad2-1.fna&oh=0ff5879dda5b909f3bf475de873ccc7f&oe=60DE7FF0",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/56578205_163129111372454_5737897709830930432_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=tEdt-7lanr8AX_Ytw68&_nc_ht=scontent.fdad2-1.fna&oh=32a1966f42869d999418eb55670341f4&oe=60DE1357",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/58377893_165968861088479_2752142088962310144_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=Nr5Pa6idTS0AX-n3eK4&_nc_ht=scontent.fdad2-1.fna&oh=27d5f211da14ced95e04f044f145cc40&oe=60DE723A",
-  //     "https://scontent-hkg4-1.xx.fbcdn.net/v/t1.6435-9/60047210_170309117321120_7903570071883087872_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=a2Y0d1ygaJEAX9AyiM8&_nc_ht=scontent-hkg4-1.xx&oh=9ca579cbfcb763a2135284dac3d2c87d&oe=60E1348C",
-  //     "https://scontent-hkg4-2.xx.fbcdn.net/v/t1.6435-9/120660089_393393651679331_1736612289947580072_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=WdxI6LNNORYAX_aO8hA&_nc_ht=scontent-hkg4-2.xx&oh=00ea2a8a1b4aec1845fa6f40af74b205&oe=60DDA1CF",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/97809765_301050514246979_4483881806176714752_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=70ysF2VTy-IAX-NO6AM&_nc_ht=scontent.fdad2-1.fna&oh=0ff5879dda5b909f3bf475de873ccc7f&oe=60DE7FF0",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/56578205_163129111372454_5737897709830930432_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=tEdt-7lanr8AX_Ytw68&_nc_ht=scontent.fdad2-1.fna&oh=32a1966f42869d999418eb55670341f4&oe=60DE1357",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/58377893_165968861088479_2752142088962310144_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=Nr5Pa6idTS0AX-n3eK4&_nc_ht=scontent.fdad2-1.fna&oh=27d5f211da14ced95e04f044f145cc40&oe=60DE723A",
-  //     "https://scontent-hkg4-1.xx.fbcdn.net/v/t1.6435-9/60047210_170309117321120_7903570071883087872_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=a2Y0d1ygaJEAX9AyiM8&_nc_ht=scontent-hkg4-1.xx&oh=9ca579cbfcb763a2135284dac3d2c87d&oe=60E1348C",
-  //     "https://scontent-hkg4-2.xx.fbcdn.net/v/t1.6435-9/120660089_393393651679331_1736612289947580072_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=WdxI6LNNORYAX_aO8hA&_nc_ht=scontent-hkg4-2.xx&oh=00ea2a8a1b4aec1845fa6f40af74b205&oe=60DDA1CF",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/97809765_301050514246979_4483881806176714752_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=70ysF2VTy-IAX-NO6AM&_nc_ht=scontent.fdad2-1.fna&oh=0ff5879dda5b909f3bf475de873ccc7f&oe=60DE7FF0",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/56578205_163129111372454_5737897709830930432_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=tEdt-7lanr8AX_Ytw68&_nc_ht=scontent.fdad2-1.fna&oh=32a1966f42869d999418eb55670341f4&oe=60DE1357",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/58377893_165968861088479_2752142088962310144_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=Nr5Pa6idTS0AX-n3eK4&_nc_ht=scontent.fdad2-1.fna&oh=27d5f211da14ced95e04f044f145cc40&oe=60DE723A",
-  //     "https://scontent-hkg4-1.xx.fbcdn.net/v/t1.6435-9/60047210_170309117321120_7903570071883087872_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=a2Y0d1ygaJEAX9AyiM8&_nc_ht=scontent-hkg4-1.xx&oh=9ca579cbfcb763a2135284dac3d2c87d&oe=60E1348C",
-  //     "https://scontent-hkg4-2.xx.fbcdn.net/v/t1.6435-9/120660089_393393651679331_1736612289947580072_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=WdxI6LNNORYAX_aO8hA&_nc_ht=scontent-hkg4-2.xx&oh=00ea2a8a1b4aec1845fa6f40af74b205&oe=60DDA1CF",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/97809765_301050514246979_4483881806176714752_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=174925&_nc_ohc=70ysF2VTy-IAX-NO6AM&_nc_ht=scontent.fdad2-1.fna&oh=0ff5879dda5b909f3bf475de873ccc7f&oe=60DE7FF0",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/56578205_163129111372454_5737897709830930432_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=174925&_nc_ohc=tEdt-7lanr8AX_Ytw68&_nc_ht=scontent.fdad2-1.fna&oh=32a1966f42869d999418eb55670341f4&oe=60DE1357",
-  //     "https://scontent.fdad2-1.fna.fbcdn.net/v/t1.6435-9/58377893_165968861088479_2752142088962310144_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=Nr5Pa6idTS0AX-n3eK4&_nc_ht=scontent.fdad2-1.fna&oh=27d5f211da14ced95e04f044f145cc40&oe=60DE723A",
-  //     "https://scontent-hkg4-1.xx.fbcdn.net/v/t1.6435-9/60047210_170309117321120_7903570071883087872_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=a2Y0d1ygaJEAX9AyiM8&_nc_ht=scontent-hkg4-1.xx&oh=9ca579cbfcb763a2135284dac3d2c87d&oe=60E1348C",
-  //   ],
-  //   "tran-ngoc-huy-35432154asd"
-  // );
-  // console.log(uploadByUrls);
-  const getIdByUrls = await tface.getIdByUrls([
-    "https://scontent-hkg4-2.xx.fbcdn.net/v/t1.6435-9/120660089_393393651679331_1736612289947580072_n.jpg?_nc_cat=111&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=WdxI6LNNORYAX_aO8hA&_nc_ht=scontent-hkg4-2.xx&oh=00ea2a8a1b4aec1845fa6f40af74b205&oe=60DDA1CF",
-  ]);
-  console.log(getIdByUrls);
-  // const { message: deleteMessage } = await tface.deleteById("1");
-  // console.log(deleteMessage);
+  /**
+   * UPLOAD
+   */
+  console.log("==== UPLOAD");
+  console.log(
+    "uploadByUrls",
+    102180234,
+    await tface.uploadByUrls(
+      [
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+      ].slice(0, 20),
+      "1",
+    ),
+  );
+  console.log(
+    "uploadByUrls",
+    102180229,
+    await tface.uploadByUrls(
+      [
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      ].slice(0, 20),
+      "2",
+    ),
+  );
+  console.log(
+    "uploadByUrls",
+    102180234,
+    await tface.uploadByUrls(
+      [
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+      ].slice(0, 20),
+      "1",
+    ),
+  );
+
+  console.log(
+    "uploadByUrls",
+    102180208,
+    await tface.uploadByUrls(
+      [
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+        "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+      ].slice(0, 20),
+      "3",
+    ),
+  );
+  console.log("train", await tface.train());
+
+  /**
+   * IDENTIFY
+   */
+  console.log("==== IDENTIFY");
+  console.log(
+    "getIdByUrls",
+    [102180207, 102180208, 102180229, 102180234],
+    await tface.getIdByUrls([
+      "https://cb.dut.udn.vn/ImageSV/18/102180207.jpg",
+      "https://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+      "https://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "https://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+    ]),
+  );
+  console.log(
+    "getIdByUrl",
+    102180207,
+    await tface.getIdByUrl("http://cb.dut.udn.vn/ImageSV/18/102180207.jpg"),
+  );
+  console.log(
+    "getIdByUrl",
+    102180229,
+    await tface.getIdByUrl("http://cb.dut.udn.vn/ImageSV/18/102180229.jpg"),
+  );
+  console.log(
+    "getIdByUrl",
+    102180234,
+    await tface.getIdByUrl("http://cb.dut.udn.vn/ImageSV/18/102180234.jpg"),
+  );
+
+  const { name_rp: huy } = await tface.getIdByUrl(
+    "http://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+  );
+  console.log("getIdUrl", 102180208, huy);
+
+  /**
+   * DELELTE
+   */
+  if (huy) {
+    console.log("==== DELETE");
+    console.log("deleteById", huy, await tface.deleteById(huy));
+  }
+
+  console.log("train", await tface.train());
+  console.log("==== AFTER DELETE");
+  /**
+   * CHECK AFTER DELETE
+   */
+  console.log(
+    "getIdByUrls",
+    [102180207, 102180208, 102180229, 102180234],
+    await tface.getIdByUrls([
+      "https://cb.dut.udn.vn/ImageSV/18/102180207.jpg",
+      "https://cb.dut.udn.vn/ImageSV/18/102180208.jpg",
+      "https://cb.dut.udn.vn/ImageSV/18/102180229.jpg",
+      "https://cb.dut.udn.vn/ImageSV/18/102180234.jpg",
+    ]),
+  );
 })();
