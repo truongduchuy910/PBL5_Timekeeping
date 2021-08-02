@@ -21,8 +21,12 @@ module.exports = class TFace {
   async uploadByUrls(urls, id) {
     var status;
     do {
-      status = await this.isAvailable();
-      console.log("status", status);
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
     } while (!status);
     const url = `${this.url}/uploadByUrls`;
     const body = JSON.stringify({
@@ -41,6 +45,16 @@ module.exports = class TFace {
     }
   }
   async train() {
+    var status;
+    do {
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
+    } while (!status);
+
     const url = `${this.url}/trainning`;
     const response = await fetch(url, {
       headers: {
@@ -50,7 +64,14 @@ module.exports = class TFace {
       method: "GET",
       redirect: "follow",
     });
-    return response.status === 200;
+    do {
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
+    } while (!status);
   }
   /**
    * @param {Array.<String>} urls
@@ -59,8 +80,12 @@ module.exports = class TFace {
   async getIdByUrls(urls) {
     var status;
     do {
-      status = await this.isAvailable();
-      console.log("status", status);
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
     } while (!status);
     const url = `${this.url}/identifiedStrList`;
     const body = JSON.stringify({
@@ -78,8 +103,12 @@ module.exports = class TFace {
   async getIdByUrl(url) {
     var status;
     do {
-      status = await this.isAvailable();
-      console.log("status", status);
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
     } while (!status);
     const _url = `${this.url}/identifiedStr`;
     const body = JSON.stringify({

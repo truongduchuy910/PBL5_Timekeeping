@@ -10,8 +10,8 @@ export default class TFace {
     method: "POST",
     redirect: "follow",
   };
-  constructor(mode) {
-    if (mode === "production") this.mode = "";
+  constructor(url) {
+    this.url = url;
   }
   /**
    * @param {Array.<String>} urls
@@ -21,8 +21,12 @@ export default class TFace {
   async uploadByUrls(urls, id) {
     var status;
     do {
-      status = await this.isAvailable();
-      console.log("status", status);
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
     } while (!status);
     const url = `${this.url}/uploadByUrls`;
     const body = JSON.stringify({
@@ -33,24 +37,39 @@ export default class TFace {
       ...this.option,
       body,
     });
-    if (response.status === 200) {
-      const data = await response.json();
-      return data;
-    } else {
-      console.error(response.status, response.statusText);
-    }
+    return response.status === 200;
   }
   async train() {
-    const url = `${this.url}/trainning`;
-    const response = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-      method: "GET",
-      redirect: "follow",
-    });
-    return response.status === 200;
+    var status;
+    do {
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
+    } while (!status);
+    try {
+      const url = `${this.url}/trainning`;
+      await fetch(url, {
+        headers: {
+          Accept: "application/json",
+          "Content-type": "application/json",
+        },
+        method: "GET",
+        redirect: "follow",
+      });
+    } catch (e) {
+      console.log("cannot call train");
+    }
+    do {
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
+    } while (!status);
   }
   /**
    * @param {Array.<String>} urls
@@ -59,8 +78,12 @@ export default class TFace {
   async getIdByUrls(urls) {
     var status;
     do {
-      status = await this.isAvailable();
-      console.log("status", status);
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
     } while (!status);
     const url = `${this.url}/identifiedStrList`;
     const body = JSON.stringify({
@@ -78,8 +101,12 @@ export default class TFace {
   async getIdByUrl(url) {
     var status;
     do {
-      status = await this.isAvailable();
-      console.log("status", status);
+      try {
+        status = await this.isAvailable();
+        console.log("status", status);
+      } catch (e) {
+        console.log("status", false);
+      }
     } while (!status);
     const _url = `${this.url}/identifiedStr`;
     const body = JSON.stringify({
