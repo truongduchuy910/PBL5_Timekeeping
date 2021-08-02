@@ -1,5 +1,5 @@
 const { Relationship, Checkbox, Integer, Text } = require("@itoa/fields");
-let { sellerItem } = require("../access");
+let { sellerItem, publicItem } = require("../access");
 const format = new Intl.NumberFormat().format;
 const { gql } = require("@apollo/client");
 const { GraphQLError } = require("graphql");
@@ -33,6 +33,7 @@ module.exports = {
       const date = new Date();
       //  1. find shifts
       const { data = {} } = await context.executeGraphQL({
+        context: context.createContext({ skipAccessControl: true }),
         query: gql`
           query($id: ID) {
             allShifts {
@@ -64,9 +65,10 @@ module.exports = {
         // 2. get works in shift field
         if (!shift.workers || !shift.workers.length) return;
         const workers = shift.workers.map((worker) => worker.id);
-        const exist = workers.find(
-          (worker) => worker.id === resolvedData.worker,
-        );
+        const exist = workers.find((worker) => {
+          console.log(worker);
+          return worker.id === resolvedData.worker;
+        });
         console.log("exist", exist);
         if (!workers.includes(resolvedData.worker)) return;
         // 3. get valid shift +5 minute -45 minute. Assign shift and check onTime
@@ -104,5 +106,5 @@ module.exports = {
     defaultColumns: "worker, onTime, shift",
     defaultSort: "createdAt",
   },
-  access: sellerItem,
+  access: publicItem,
 };
