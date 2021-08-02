@@ -56,6 +56,7 @@ module.exports = {
       });
       const { allShifts = [] } = data;
       if (!allShifts.length) throw new GraphQLError("Shift is empty");
+      console.log(allShifts);
       //
       const current = date.getHours() * 60 + date.getMinutes();
       var validShift = false;
@@ -81,7 +82,7 @@ module.exports = {
         throw new GraphQLError(`in valid shift, ${resolvedData.worker}`);
       // 4. if existing work in same day, throw error
       const existing = validShift.works.map((work) =>
-        new Date(work.createdAt).toLocaleDateString()
+        new Date(work.createdAt).toLocaleDateString(),
       );
       if (existing.includes(date.toLocaleDateString()))
         throw new GraphQLError(`work duplicate, ${resolvedData.worker}`);
@@ -91,7 +92,9 @@ module.exports = {
     },
   },
   labelResolver: (item) =>
-    `💵 ${new Date(item.createdAt).toLocaleTimeString("vn-VN")} ${format(item.price)}`,
+    `💵 ${new Date(item.createdAt).toLocaleTimeString("vn-VN")} ${format(
+      item.price,
+    )}`,
   adminConfig: {
     defaultColumns: "worker, onTime, shift",
     defaultSort: "createdAt",
