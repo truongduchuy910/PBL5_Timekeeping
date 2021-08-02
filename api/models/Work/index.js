@@ -64,10 +64,15 @@ module.exports = {
         // 2. get works in shift field
         if (!shift.workers || !shift.workers.length) return;
         const workers = shift.workers.map((worker) => worker.id);
+        const exist = workers.ind(
+          (worker) => worker.id === resolvedData.worker,
+        );
+        console.log("exist", exist);
         if (!workers.includes(resolvedData.worker)) return;
         // 3. get valid shift +5 minute -45 minute. Assign shift and check onTime
         const _date = new Date(shift.checkin);
         const checkin = _date.getHours() * 60 + _date.getMinutes();
+        console.log(current, checkin);
         // if 5 minutes late, do nothing
         // and 45 minutes early
         if (current < checkin + 5 && current > checkin - 45) {
