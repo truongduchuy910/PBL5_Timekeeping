@@ -3,6 +3,7 @@ var shift = require("./Shift");
 var work = require("./Work");
 var image = require("./Image");
 var face = require("./Face");
+var tface = require("./TFace");
 var report = require("./Report");
 /**
  *
@@ -46,6 +47,7 @@ class Models extends Extension {
     this.keystone.createList("Work", { ...work, plugins: [at, by] });
     this.keystone.createList("Image", { ...image, plugins: [at, by] });
     this.keystone.createList("Face", { ...face, plugins: [at, by] });
+    this.keystone.createList("TFace", { ...tface, plugins: [at, by] });
     this.keystone.createList("Report", { ...report, plugins: [at, by] });
     this.keystone.createList("User", user);
   }

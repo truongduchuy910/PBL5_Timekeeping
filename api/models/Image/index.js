@@ -1,8 +1,9 @@
 let { File, Relationship, Checkbox, Text } = require("@itoa/fields");
 let { imageAdapter } = require("../localFileAdapter");
-let { sellerItem } = require("../access");
+let { sellerItem, publicItem } = require("../access");
 const { gql } = require("@apollo/client");
 const { GraphQLError } = require("graphql");
+const TFace = require("../../api.es5");
 
 module.exports = {
   fields: {
@@ -21,11 +22,11 @@ module.exports = {
     identity: { type: Text },
     work: { type: Relationship, ref: "Work.images" },
   },
-  access: sellerItem,
+  access: publicItem,
   labelResolver: (item) =>
     `${item.identity ? "🎉" : "🖼"} ${new Date(
-      item.createdAt
-    ).toLocaleString()}`,
+      item.createdAt,
+    ).toLocaleTimeString("vn-VN")}`,
   adminConfig: {
     defaultColumns: "work, file, updatedAt",
     defaultSort: "createdAt",
@@ -45,42 +46,52 @@ module.exports = {
       /**
        *  fetch api simulation
        */
-      const { data } = await context.executeGraphQL({
-        query: gql`
-          query {
-            allUsers {
-              id
-            }
-          }
-        `,
-      });
-      const { allUsers } = data;
-      const user = allUsers[Math.floor(Math.random() * allUsers.length)];
-      resolvedData.identity = user.id;
-      /**
-       * create work for identity
-       */
-      const { identity } = resolvedData;
-      if (identity) {
-        const { data, errors } = await context.executeGraphQL({
+      try {
+        const {
+          data: { allTFaces = [] },
+          error,
+        } = await context.executeGraphQL({
           query: gql`
-            mutation($data: WorkCreateInput) {
-              createWork(data: $data) {
+            query($id: ID!) {
+              allTFaces {
                 id
+                url
               }
             }
           `,
-          variables: {
-            data: {
-              worker: { connect: { id: identity } },
-            },
-          },
         });
-        if (errors) throw new GraphQLError(errors.toString());
-        if (!data || !data.createWork) throw new GraphQLError("cannot create");
-        const { createWork } = data;
-        resolvedData.work = createWork.id;
-      }
+        if (error) throw error;
+        const [{ url }] = allTFaces;
+        const tface = new TFace(url);
+        resolvedData.identity = await tface.getIdByUrl(
+          resolvedData.file.publicUrl,
+        );
+        /**
+         * create work for identity
+         */
+        const { identity } = resolvedData;
+        if (identity) {
+          const { data, errors } = await context.executeGraphQL({
+            query: gql`
+              mutation($data: WorkCreateInput) {
+                createWork(data: $data) {
+                  id
+                }
+              }
+            `,
+            variables: {
+              data: {
+                worker: { connect: { id: identity } },
+              },
+            },
+          });
+          if (errors) throw new GraphQLError(errors.toString());
+          if (!data || !data.createWork)
+            throw new GraphQLError("cannot create");
+          const { createWork } = data;
+          resolvedData.work = createWork.id;
+        }
+      } catch (error) {}
     },
   },
 };

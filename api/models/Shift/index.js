@@ -18,9 +18,10 @@ module.exports = {
   },
 
   labelResolver: (item) =>
-    `⏱ ${new Date(item.checkin).toLocaleTimeString()} - ${format(
-      item.price
+    `⏱ ${new Date(item.checkin).toLocaleTimeString("vn-VN")} - ${format(
+      item.price,
     )} hourly`,
+    
   adminConfig: {
     defaultColumns: "name, workers, updatedAt",
     defaultSort: "createdAt",

@@ -7,5 +7,7 @@ module.exports = {
     message: { type: Text },
     solved: { type: Checkbox },
   },
+  labelResolver: (item) =>
+    `👤 ${new Date(item.createdAt).toLocaleTimeString("vn-VN")}`,
   access: sellerItem,
 };

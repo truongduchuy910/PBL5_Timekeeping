@@ -88,6 +88,7 @@ const sellerItem = {
 };
 
 const publicItemRead = ({ authentication, context }) => {
+  return true;
   const { item: user } = authentication;
   return Boolean(user);
 };

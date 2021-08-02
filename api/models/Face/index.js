@@ -1,4 +1,4 @@
-let { File, Relationship, Checkbox } = require("@itoa/fields");
+let { File, Relationship, Checkbox, Text } = require("@itoa/fields");
 let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem } = require("../access");
 const { default: gql } = require("graphql-tag");
@@ -17,9 +17,11 @@ module.exports = {
       },
       isRequired: true,
     },
+    alt: { type: Text },
     user: { type: Relationship, ref: "User.faces", many: false },
   },
-  labelResolver: (item) => `👤 ${new Date(item.createdAt).toLocaleString()}`,
+  labelResolver: (item) =>
+    `👤 ${new Date(item.createdAt).toLocaleTimeString("vn-VN")}`,
   labelName: "Face for training",
   adminConfig: {
     defaultColumns: "file, user, updatedAt",
