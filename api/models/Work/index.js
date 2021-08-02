@@ -64,7 +64,7 @@ module.exports = {
         // 2. get works in shift field
         if (!shift.workers || !shift.workers.length) return;
         const workers = shift.workers.map((worker) => worker.id);
-        const exist = workers.ind(
+        const exist = workers.find(
           (worker) => worker.id === resolvedData.worker,
         );
         console.log("exist", exist);
