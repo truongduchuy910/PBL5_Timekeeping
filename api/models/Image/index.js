@@ -62,6 +62,7 @@ module.exports = {
         });
         if (error) throw error;
         const [{ url }] = allTFaces;
+        console.log(url, resolvedData);
         const tface = new TFace(url);
         resolvedData.identity = await tface.getIdByUrl(
           resolvedData.file.publicUrl,

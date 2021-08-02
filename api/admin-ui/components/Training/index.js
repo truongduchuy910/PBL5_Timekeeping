@@ -6,10 +6,12 @@ export default function Training({ url }) {
   const [status, setStatus] = useState();
   const tface = new TFace(url);
   useEffect(async () => {
-    setTimeout(async () => {
+    try {
       const _status = await tface.isAvailable();
       setStatus(_status);
-    }, 1000);
+    } catch (e) {
+      setStatus(falsei);
+    }
   });
   return (
     <div>
