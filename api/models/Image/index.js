@@ -65,7 +65,7 @@ module.exports = {
       console.log(url, resolvedData);
       const tface = new TFace(url);
       resolvedData.identity = await tface.getIdByUrl(
-        resolvedData.file.publicUrl,
+        `https://timekeeping.itoa.vn/upload/img/${resolvedData.file.filename}`,
       );
       /**
        * create work for identity
