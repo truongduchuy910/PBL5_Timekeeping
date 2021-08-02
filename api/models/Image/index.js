@@ -3,6 +3,7 @@ let { imageAdapter } = require("../localFileAdapter");
 let { sellerItem, publicItem } = require("../access");
 const { gql } = require("@apollo/client");
 const { GraphQLError } = require("graphql");
+const TFace = require("../../api.es5");
 
 module.exports = {
   fields: {
@@ -24,8 +25,8 @@ module.exports = {
   access: publicItem,
   labelResolver: (item) =>
     `${item.identity ? "🎉" : "🖼"} ${new Date(
-      item.createdAt
-    ).toLocaleString()}`,
+      item.createdAt,
+    ).toLocaleTimeString("vn-VN")}`,
   adminConfig: {
     defaultColumns: "work, file, updatedAt",
     defaultSort: "createdAt",
@@ -46,19 +47,25 @@ module.exports = {
        *  fetch api simulation
        */
       try {
-        const { data } = await context.executeGraphQL({
-          context: context.createContext({ skipAccessControl: true }),
+        const {
+          data: { allTFaces = [] },
+          error,
+        } = await context.executeGraphQL({
           query: gql`
-            query {
-              allUsers {
+            query($id: ID!) {
+              allTFaces {
                 id
+                url
               }
             }
           `,
         });
-        const { allUsers } = data;
-        const user = allUsers[Math.floor(Math.random() * allUsers.length)];
-        resolvedData.identity = user.id;
+        if (error) throw error;
+        const [{ url }] = allTFaces;
+        const tface = new TFace(url);
+        resolvedData.identity = await tface.getIdByUrl(
+          resolvedData.file.publicUrl,
+        );
         /**
          * create work for identity
          */

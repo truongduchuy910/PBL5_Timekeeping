@@ -91,7 +91,7 @@ module.exports = {
     },
   },
   labelResolver: (item) =>
-    `💵 ${new Date(item.createdAt).toLocaleString()} ${format(item.price)}`,
+    `💵 ${new Date(item.createdAt).toLocaleTimeString("vn-VN")} ${format(item.price)}`,
   adminConfig: {
     defaultColumns: "worker, onTime, shift",
     defaultSort: "createdAt",
