@@ -46,53 +46,51 @@ module.exports = {
       /**
        *  fetch api simulation
        */
-      try {
-        const {
-          data: { allTFaces = [] },
-          error,
-        } = await context.executeGraphQL({
+
+      const {
+        data: { allTFaces = [] },
+        error,
+      } = await context.executeGraphQL({
+        query: gql`
+          query($id: ID!) {
+            allTFaces {
+              id
+              url
+            }
+          }
+        `,
+      });
+      if (error) throw error;
+      const [{ url }] = allTFaces;
+      console.log(url, resolvedData);
+      const tface = new TFace(url);
+      resolvedData.identity = await tface.getIdByUrl(
+        resolvedData.file.publicUrl,
+      );
+      /**
+       * create work for identity
+       */
+      const { identity } = resolvedData;
+      if (identity) {
+        const { data, errors } = await context.executeGraphQL({
           query: gql`
-            query($id: ID!) {
-              allTFaces {
+            mutation($data: WorkCreateInput) {
+              createWork(data: $data) {
                 id
-                url
               }
             }
           `,
-        });
-        if (error) throw error;
-        const [{ url }] = allTFaces;
-        console.log(url, resolvedData);
-        const tface = new TFace(url);
-        resolvedData.identity = await tface.getIdByUrl(
-          resolvedData.file.publicUrl,
-        );
-        /**
-         * create work for identity
-         */
-        const { identity } = resolvedData;
-        if (identity) {
-          const { data, errors } = await context.executeGraphQL({
-            query: gql`
-              mutation($data: WorkCreateInput) {
-                createWork(data: $data) {
-                  id
-                }
-              }
-            `,
-            variables: {
-              data: {
-                worker: { connect: { id: identity } },
-              },
+          variables: {
+            data: {
+              worker: { connect: { id: identity } },
             },
-          });
-          if (errors) throw new GraphQLError(errors.toString());
-          if (!data || !data.createWork)
-            throw new GraphQLError("cannot create");
-          const { createWork } = data;
-          resolvedData.work = createWork.id;
-        }
-      } catch (error) {}
+          },
+        });
+        if (errors) throw new GraphQLError(errors.toString());
+        if (!data || !data.createWork) throw new GraphQLError("cannot create");
+        const { createWork } = data;
+        resolvedData.work = createWork.id;
+      }
     },
   },
 };
