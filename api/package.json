@@ -16,7 +16,7 @@
   "scripts": {
     "dev": "cross-env PORT=7009 cross-env NODE_ENV=development DISABLE_LOGGING=true keystone dev",
     "build": "cross-env PORT=7009 cross-env NODE_ENV=production keystone build",
-    "start": "cross-env PORT=7009 cross-env NODE_ENV=production keystone start",
+    "start": "cross-env PORT=7009 cross-env NODE_ENV=production DISABLE_LOGGING=true keystone start",
     "test": "cross-env PORT=7009 cross-env NODE_ENV=test DISABLE_LOGGING=true keystone dev",
     "create-tables": "cross-env CREATE_TABLES=true keystone create-tables"
   },
