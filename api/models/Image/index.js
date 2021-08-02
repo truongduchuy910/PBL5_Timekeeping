@@ -52,7 +52,7 @@ module.exports = {
         error,
       } = await context.executeGraphQL({
         query: gql`
-          query($id: ID!) {
+          query {
             allTFaces {
               id
               url
