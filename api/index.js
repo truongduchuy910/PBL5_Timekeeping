@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Keystone } = require("@itoa/keystone");
 const { GraphQLApp } = require("@itoa/app-graphql");
 const { AdminUIApp } = require("@itoa/app-admin-ui");
+const { StaticApp } = require("@itoa/app-static");
 const { Packages } = require("./packages");
 const { Models } = require("./models");
 const initialiseData = require("./initial-data");
@@ -32,7 +33,12 @@ module.exports = {
     new AdminUIApp({
       adminPath: "/admin",
       authStrategy: models.authStrategy,
-      enableDefaultRoute: true,
+      enableDefaultRoute: false,
+    }),
+    new StaticApp({
+      path: "/",
+      src: "web-build",
+      fallback: "index.html",
     }),
   ],
   configureExpress: packages.configureExpress,

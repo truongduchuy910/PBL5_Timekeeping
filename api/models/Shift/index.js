@@ -1,5 +1,5 @@
 const { Relationship, DateTime, Integer, Text } = require("@itoa/fields");
-let { publicItem, sellerItem } = require("../access");
+let { publicItem } = require("../access");
 const format = new Intl.NumberFormat().format;
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
     `⏱ ${new Date(item.checkin).toLocaleTimeString("vn-VN")} - ${format(
       item.price,
     )} hourly`,
-    
+
   adminConfig: {
     defaultColumns: "name, workers, updatedAt",
     defaultSort: "createdAt",
