@@ -37,7 +37,7 @@ module.exports = {
     }),
     new StaticApp({
       path: "/",
-      src: "web-build",
+      src: "./web-build",
       fallback: "index.html",
     }),
   ],
