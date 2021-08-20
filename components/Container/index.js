@@ -6,7 +6,7 @@ export default function Container({ children }) {
     <View
       style={{
         padding: 30,
-        backgroundColor: "#fff",
+        backgroundColor: "transparent",
         flex: 1,
       }}
     >

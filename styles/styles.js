@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   HomeContainer: {
     padding: 30,
-    backgroundColor: "#fff",
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "white",
   },
   logoContainer: {
     alignItems: "center",
@@ -53,7 +53,6 @@ export const styles = StyleSheet.create({
     paddingBottom: 22,
     width: "48%",
     alignItems: "center",
-    backgroundColor: "#fff",
     shadowColor: "#666",
     shadowOffset: {
       width: 7,
@@ -98,7 +97,6 @@ export const styles = StyleSheet.create({
     borderColor: "#24c48a",
     marginBottom: 30,
     padding: 14,
-    backgroundColor: "#f5fffb",
   },
   notificationText: {
     color: "#24c48a",
@@ -111,7 +109,6 @@ export const styles = StyleSheet.create({
     borderRadius: 7,
     marginBottom: 30,
     padding: 14,
-    backgroundColor: "#fff",
     shadowColor: "#666",
     shadowOffset: {
       width: 7,
@@ -120,6 +117,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 10,
     elevation: 1,
+    backgroundColor: "white",
   },
   salaryLine: {
     flexDirection: "row",
@@ -175,7 +173,6 @@ export const styles = StyleSheet.create({
 
   modalContainer: {
     padding: 30,
-    backgroundColor: "#fff",
   },
 
   calendarIcon: {

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.19",
+    "@expo/next-adapter": "^3.0.4",
     "@primer/components": "^28.3.1",
     "@react-native-async-storage/async-storage": "^1.15.4",
     "@react-native-community/masked-view": "0.1.10",

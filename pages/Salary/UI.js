@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import Container from "../../components/Container";
 import { styles } from "../../styles/styles";
-import { useState } from "react/cjs/react.development";
-
+const options = [
+  { label: "January", value: "01" },
+  { label: "February", value: "02" },
+  { label: "March", value: "03" },
+  { label: "April", value: "04" },
+  { label: "May", value: "05" },
+  { label: "June", value: "06" },
+  { label: "July", value: "07" },
+  { label: "August", value: "08" },
+  { label: "September", value: "09" },
+  { label: "October", value: "10" },
+  { label: "November", value: "11" },
+  { label: "December", value: "12" },
+];
 const month = new Date().getMonth() + 1;
 export default function SalaryScreen({ onChange, salary, working, late }) {
-  const [selectedLanguage, setSelectedLanguage] = useState(month.toString());
-  console.log(onChange);
+  const [selectedLanguage, setSelectedLanguage] = useState(
+    (month < 9 ? "0" : "") + month.toString(),
+  );
+  console.log(selectedLanguage);
   return (
     <Container>
       <View style={styles.salaryBox}>
@@ -45,18 +59,9 @@ export default function SalaryScreen({ onChange, salary, working, late }) {
           color: "rgb(36, 196, 138)",
         }}
       >
-        <Picker.Item label="January" value="01" />
-        <Picker.Item label="February" value="02" />
-        <Picker.Item label="March" value="03" />
-        <Picker.Item label="April" value="04" />
-        <Picker.Item label="May" value="05" />
-        <Picker.Item label="June" value="06" />
-        <Picker.Item label="July" value="07" />
-        <Picker.Item label="August" value="08" />
-        <Picker.Item label="September" value="09" />
-        <Picker.Item label="October" value="10" />
-        <Picker.Item label="November" value="11" />
-        <Picker.Item label="December" value="12" />
+        {options.map(({ label, value }) => (
+          <Picker.Item key={value} label={label} value={value} />
+        ))}
       </Picker>
     </Container>
   );

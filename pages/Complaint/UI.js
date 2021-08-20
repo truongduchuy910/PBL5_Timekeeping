@@ -66,53 +66,8 @@ export default function ComplaintScreen({ navigation, clickCreate, result }) {
             in this form and we will solve your issue immediately.
           </Text>
         </View> */}
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: "#eee",
-            marginBottom: 12,
-            borderRadius: 8,
-            padding: 10,
-            flexDirection: "row",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 14,
-              color: "#666",
-            }}
-          >
-            {day.dateString}
-          </Text>
-          <TouchableOpacity
-            style={{ marginLeft: "auto" }}
-            onPress={() => {
-              // setIsModalShow(true);
-            }}
-          >
-            <MaterialCommunityIcons
-              name="calendar-month-outline"
-              size={16}
-              color="#24c48a"
-            />
-          </TouchableOpacity>
-        </View>
-        <TextInput
-          style={{
-            fontSize: 14,
-            color: "#666",
-            borderWidth: 1,
-            borderColor: "#eee",
-            marginBottom: 12,
-            borderRadius: 8,
-            padding: 10,
-          }}
-          value={message}
-          placeholder="Your Message"
-          onChangeText={setMessage}
-        />
-        {!result?.loading && <Button value={"SEND NOW"} onPress={pressSend} />}
-        {result?.data?.createReport && (
+
+        {result?.data?.createReport ? (
           <Fragment>
             <Text
               style={{
@@ -134,6 +89,58 @@ export default function ComplaintScreen({ navigation, clickCreate, result }) {
             >
               We will always try to deal with your complaint quickly.
             </Text>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: "#eee",
+                marginBottom: 12,
+                borderRadius: 8,
+                padding: 10,
+                flexDirection: "row",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  color: "#666",
+                }}
+              >
+                {day.dateString}
+              </Text>
+              <TouchableOpacity
+                style={{ marginLeft: "auto" }}
+                onPress={() => {
+                  // setIsModalShow(true);
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="calendar-month-outline"
+                  size={16}
+                  color="#24c48a"
+                />
+              </TouchableOpacity>
+            </View>
+            <TextInput
+              style={{
+                fontSize: 14,
+                color: "#666",
+                borderWidth: 1,
+                borderColor: "#eee",
+                marginBottom: 12,
+                borderRadius: 8,
+                padding: 10,
+                backgroundColor: "white",
+              }}
+              value={message}
+              placeholder="Your Message"
+              onChangeText={setMessage}
+            />
+            {!result?.loading && (
+              <Button value={"SEND NOW"} onPress={pressSend} />
+            )}
           </Fragment>
         )}
       </View>

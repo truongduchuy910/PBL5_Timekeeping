@@ -10,6 +10,7 @@ import { styles } from "../../styles/styles";
 import React, { useMemo, useState } from "react";
 import Button from "../../components/Button";
 import AnimationEmoji from "../../components/Animation/Emoji";
+import Layout from "../../components/Layout";
 export default function UI({ onSignIn, result, pressAuthor, errors }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,10 +18,10 @@ export default function UI({ onSignIn, result, pressAuthor, errors }) {
     () => (e) => {
       onSignIn({ username, password });
     },
-    [username, password]
+    [username, password],
   );
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback style={{ backgroundColor: "tranparent" }}>
       <View style={styles.HomeContainer}>
         <View style={styles.logoContainer}>
           <Image source={require("./logo.png")} style={styles.logo}></Image>

@@ -45,7 +45,7 @@ export default function TimekeeperScreen({
     allWorks.map((work) => {
       const _date = new Date(work.createdAt);
       const date = `${prefix(_date.getFullYear())}-${prefix(
-        _date.getMonth() + 1
+        _date.getMonth() + 1,
       )}-${prefix(_date.getDate())}`;
       const dot = {
         color: "blue",
@@ -58,52 +58,56 @@ export default function TimekeeperScreen({
   console.log(worked);
   return (
     <Container>
-      <Calendar
-        markedDates={{ ...worked }}
-        markingType={"multi-dot"}
-        theme={{
-          arrowColor: "#24c48a",
-          todayTextColor: "#24c48a",
-          textMonthFontWeight: "500",
-          monthTextColor: "#24c48a",
-          textDayHeaderFontSize: 14,
-          textDayFontSize: 14,
-          textDayHeaderFontWeight: "500",
-          selectedDayBackgroundColor: "#24c48a",
-          selectedDayTextColor: "#ffffff",
-          textSectionTitleColor: "#b6c1cd",
-        }}
-        onDayPress={(day) => selectDate(day)}
-        onMonthChange={(month) => monthChange(month)}
-        firstDay={1}
-        style={styles.calendar}
-      />
-      {loading && <Text>Loading...</Text>}
-      {details.map((work) => {
-        const date = new Date(work.createdAt);
-        return (
-          <View
-            key={work.id}
-            style={{
-              borderWidth: 1,
-              borderRadius: 10,
-              borderColor: "#24c48a",
-              marginBottom: 13,
-              padding: 14,
-              backgroundColor: "#f5fffb",
-            }}
-          >
-            <Text
-              style={{
-                color: "#24c48a",
-                fontWeight: "bold",
-              }}
-            >
-              🎉 You checked in at {date.toLocaleString("vi-VN")}
-            </Text>
-          </View>
-        );
-      })}
+      <View style={{ display: "flex", height: "100%" }}>
+        <Calendar
+          markedDates={{ ...worked }}
+          markingType={"multi-dot"}
+          theme={{
+            arrowColor: "#24c48a",
+            todayTextColor: "#24c48a",
+            textMonthFontWeight: "500",
+            monthTextColor: "#24c48a",
+            textDayHeaderFontSize: 14,
+            textDayFontSize: 14,
+            textDayHeaderFontWeight: "500",
+            selectedDayBackgroundColor: "#24c48a",
+            selectedDayTextColor: "#ffffff",
+            textSectionTitleColor: "#b6c1cd",
+          }}
+          onDayPress={(day) => selectDate(day)}
+          onMonthChange={(month) => monthChange(month)}
+          firstDay={1}
+          style={styles.calendar}
+        />
+        {loading && <Text>Loading...</Text>}
+        <View style={{ overflowY: "scroll", height: "100%", flex: 1 }}>
+          {details.map((work) => {
+            const date = new Date(work.createdAt);
+            return (
+              <View
+                key={work.id}
+                style={{
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  borderColor: "#24c48a",
+                  marginBottom: 13,
+                  padding: 14,
+                  backgroundColor: "#f5fffb",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#24c48a",
+                    fontWeight: "bold",
+                  }}
+                >
+                  🎉 You checked in at {date.toLocaleString("vi-VN")}
+                </Text>
+              </View>
+            );
+          })}
+        </View>
+      </View>
     </Container>
   );
 }
